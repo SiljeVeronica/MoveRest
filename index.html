@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic Meta Tags for Character Encoding and Responsive Design -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoveRest - Track Your Wellbeing</title>
+    <!-- Link to our external CSS stylesheet for modern styling -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Main Application Header -->
+        <header>
+            <h1>MoveRest</h1>
+            <p class="subtitle">Track habits, embrace recovery</p>
+        </header>
+
+        <main>
+            <!-- Calendar Section: Displays the monthly view and navigation -->
+            <section id="calendar-section" class="card">
+                <div class="calendar-header">
+                    <!-- Navigation buttons for previous and next month -->
+                    <button id="prev-month">&lt;</button>
+                    <h2 id="current-month-year"></h2>
+                    <button id="next-month">&gt;</button>
+                </div>
+                <!-- Static Header for Days of the Week -->
+                <div class="calendar-days-header">
+                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                </div>
+                <!-- Dynamic Grid where days will be injected by JavaScript -->
+                <div id="calendar-grid" class="calendar-grid">
+                    <!-- Calendar cells will be injected here by app.js -->
+                </div>
+            </section>
+
+            <!-- Main Action Button to open the registration flow -->
+            <div class="actions">
+                <button id="add-entry-btn" class="btn btn-primary">Register Today</button>
+            </div>
+        </main>
+
+        <!-- Registration Modal: A multi-step form for user input -->
+        <div id="registration-modal" class="modal hidden">
+            <div class="modal-content">
+                <!-- Close button for the modal -->
+                <span class="close-btn">&times;</span>
+                
+                <!-- Step 1: Status Selection (How are you?) -->
+                <div id="step-1" class="modal-step">
+                    <h3>How are you today?</h3>
+                    <div class="status-options">
+                        <button class="status-btn status-green" data-status="green">
+                            <span class="icon">??</span>
+                            <span class="label">Green Day</span>
+                        </button>
+                        <button class="status-btn status-red" data-status="red">
+                            <span class="icon">??</span>
+                            <span class="label">Red Day</span>
+                        </button>
+                        <button class="status-btn status-brown" data-status="brown">
+                            <span class="icon">??</span>
+                            <span class="label">Sick/Away</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Contextual Details (Workout or Reason for Red day) -->
+                <div id="step-2" class="modal-step hidden">
+                    <h3 id="step-2-title">Details</h3>
+                    <form id="entry-form">
+                        <!-- Red Reasons: Shown only if 'Red Day' is selected in Step 1 -->
+                        <div id="red-reasons" class="form-group hidden">
+                            <label>Reason for Red Status:</label>
+                            <div class="reason-options">
+                                <label><input type="radio" name="reason" value="Pain"> Pain</label>
+                                <label><input type="radio" name="reason" value="Discomfort"> Discomfort</label>
+                                <label><input type="radio" name="reason" value="Low Energy"> Low Energy</label>
+                            </div>
+                        </div>
+
+                        <!-- Workout Details: Shared between Green and Red days -->
+                        <div id="workout-details">
+                            <div class="form-group">
+                                <label for="workout-type">Workout Type:</label>
+                                <input type="text" id="workout-type" placeholder="e.g. Running, Yoga">
+                            </div>
+                            <div class="form-group-row">
+                                <div class="form-group">
+                                    <label for="duration">Duration (min):</label>
+                                    <input type="number" id="duration" placeholder="30">
+                                </div>
+                                <div class="form-group">
+                                    <label for="intensity">Intensity:</label>
+                                    <select id="intensity">
+                                        <option value="easy">Easy</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="hard">Hard</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- General Note/Comment: Available for all statuses -->
+                        <div class="form-group">
+                            <label for="note">Comment / Note:</label>
+                            <textarea id="note" rows="3" placeholder="How did it go?"></textarea>
+                        </div>
+
+                        <!-- Final Save Button -->
+                        <button type="submit" class="btn btn-primary full-width">Save Entry</button>
+                    </form>
+                </div>
+
+                <!-- Feedback Step: Shows a motivational message after saving -->
+                <div id="step-feedback" class="modal-step hidden">
+                    <div class="feedback-content">
+                        <div id="feedback-icon" class="large-icon">?</div>
+                        <p id="feedback-message"></p>
+                        <button id="close-feedback-btn" class="btn btn-secondary">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Load our core application logic script -->
+    <script src="app.js"></script>
+</body>
+</html>

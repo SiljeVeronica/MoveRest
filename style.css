@@ -1,0 +1,336 @@
+/* --- CSS Custom Properties (Variables) --- 
+   These define our color palette and theme constants for easy maintenance.
+*/
+:root {
+    --primary-color: #4a90e2;    /* Main brand color (Blue) */
+    --secondary-color: #f5f7fa;  /* Light grey for backgrounds */
+    --text-color: #2d3436;       /* Dark grey for readable text */
+    --bg-color: #f0f2f5;         /* App background color */
+    --card-bg: #ffffff;          /* White background for cards */
+    --color-green: #2ecc71;      /* Success/Healthy status */
+    --color-red: #e74c3c;        /* Warning/Struggle status */
+    --color-brown: #a0522d;      /* Sick/Away status */
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Standard drop shadow */
+    --radius: 12px;              /* Standard rounded corners */
+}
+
+/* --- Global Reset and Base Styles --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 500px; /* Limits width on desktop for mobile-like feel */
+}
+
+/* --- Typography --- */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+}
+
+.subtitle {
+    color: #636e72;
+    font-size: 1rem;
+}
+
+/* --- Card Components --- */
+.card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+}
+
+/* --- Calendar Styles --- */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-header button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--primary-color);
+    padding: 5px 10px;
+}
+
+.calendar-days-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 columns for 7 days */
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: #b2bec3;
+    margin-bottom: 10px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.calendar-day {
+    aspect-ratio: 1; /* Makes cells square */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    position: relative;
+}
+
+.calendar-day:hover {
+    background-color: var(--secondary-color);
+    transform: scale(1.05);
+}
+
+.calendar-day.today {
+    border: 2px solid var(--primary-color);
+    font-weight: bold;
+}
+
+.calendar-day.empty {
+    cursor: default;
+}
+
+.calendar-day.empty:hover {
+    background-color: transparent;
+    transform: none;
+}
+
+/* Indicators for logged statuses on the calendar */
+.day-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 4px;
+}
+
+.indicator-green { background-color: var(--color-green); }
+.indicator-red { background-color: var(--color-red); }
+.indicator-brown { background-color: var(--color-brown); }
+
+/* --- Button Styles --- */
+.actions {
+    display: flex;
+    justify-content: center;
+}
+
+.btn {
+    padding: 12px 24px;
+    border-radius: 30px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #357abd;
+}
+
+.btn-secondary {
+    background-color: #dfe6e9;
+    color: var(--text-color);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.full-width {
+    width: 100%;
+    margin-top: 15px;
+}
+
+/* --- Modal Styles (Popups) --- */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    border-radius: var(--radius);
+    padding: 30px;
+    position: relative;
+    max-height: 90vh; /* Prevents modal from going off-screen */
+    overflow-y: auto; /* Adds scroll if content is long */
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #b2bec3;
+}
+
+.modal-step.hidden {
+    display: none;
+}
+
+/* Status selection buttons (Green/Red/Brown) */
+.status-options {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 25px;
+}
+
+.status-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: 2px solid #dfe6e9;
+    border-radius: 12px;
+    padding: 15px;
+    cursor: pointer;
+    width: 100px;
+    transition: all 0.2s;
+}
+
+.status-btn .icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.status-btn .label {
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* Hover effects for status buttons using specific theme colors */
+.status-btn:hover {
+    border-color: var(--primary-color);
+    background-color: #f0f7ff;
+}
+
+.status-green:hover { border-color: var(--color-green); background-color: #e8f8f0; }
+.status-red:hover { border-color: var(--color-red); background-color: #fdf2f1; }
+.status-brown:hover { border-color: var(--color-brown); background-color: #f7f1ef; }
+
+/* --- Form Styles --- */
+.form-group {
+    margin-top: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dfe6e9;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.form-group-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.reason-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.reason-options label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+/* --- Feedback View Styles --- */
+.feedback-content {
+    text-align: center;
+}
+
+.large-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+#feedback-message {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    color: #2d3436;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 400px) {
+    .status-options {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .status-btn {
+        width: 100%;
+        flex-direction: row;
+        gap: 20px;
+    }
+    .status-btn .icon { margin-bottom: 0; }
+}
