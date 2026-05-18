@@ -1,7 +1,7 @@
 # MoveRest
 
-MoveRest is a modern, user-friendly application designed to help you track exercise habits and daily wellbeing. 
-It encourages healthier habits by helping you understand how your energy, discomfort, or recovery affects your activity levels.
+MoveRest is an easy-to-use app that helps you track your exercise and daily wellbeing. 
+It supports healthier habits by showing how your energy, pain, and recovery can affect your activity levels.
 
 ## Features
 
@@ -13,20 +13,17 @@ It encourages healthier habits by helping you understand how your energy, discom
 
 ## Getting Started
 
-Simply open index.html in your favorite web browser (Chrome, Firefox, Safari, Edge).
+Simply open the index.html in your web browser (Chrome, Firefox, Safari, Edge).
 
 ## Built With
 
-- **HTML5**: Semantic structure.
+- **HTML5**: Used for the Structure
 - **CSS3**: Modern layout using Flexbox, Grid, and CSS Variables.
-- **JavaScript (ES6+)**: Dynamic UI logic and localStorage integration.
+- **JavaScript**: For interactive features and for saving the data locally
+
 
 ## Status Indicators
 
 - **Green Day**: Feeling good, workout registered!
 - **Red Day**: Feeling off (Pain, Low Energy, Discomfort).
 - **Brown Day**: Sick or Away (Rest and recovery focus).
-
-## License
-
-This project is open-source and available under the [MIT License](LICENSE).
