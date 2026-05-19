@@ -47,7 +47,7 @@ body {
     max-width: 450px;           /* But don't get too wide on desktop, without this the container would stretch to the full width */
 }
 
-/* --- 3. HEADER & ADD BUTTON --- */
+/* --- 3. HEADER & ADD BUTTON --- */        /*Saving this website about button animations for later: https://dev.to/webdeasy/top-20-css-buttons-animations-f41 */
 .header-top { 
     display: flex;              /* Putting the title and button on same line */
     justify-content: space-between; /* Pushing the  title to the left and button to the right */
@@ -86,49 +86,49 @@ body {
     background: var(--card-bg); /* White background */
     border-radius: var(--radius); /* Rounded corners as stadet in root */
     padding: 25px;              /* Spacing inside the card */
-    box-shadow: var(--shadow);  /* Drop shadow for depth */
-    margin-bottom: 25px;        /* Space between cards */
+    box-shadow: var(--shadow);  /* shadow for depth */
+    margin-bottom: 25px;        /* space between cards */
 }
 
 /* --- 5. QUICK STATUS BUTTONS --- */
-.status-toggle-buttons { 
+.status-buttons { 
     display: grid;              /* Create a grid for buttons */
-    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    grid-template-columns: 1fr 1fr; /* Making two equal columns */
     gap: 20px;                  /* Space between the two buttons */
     margin: 20px 0;             /* Space above and below button group */
 }
 
-.status-toggle { 
-    padding: 18px;              /* Large clickable area */
+.status-button { 
+    padding: 18px;              /* Large clickable button */
     border: none;               /* No border */
-    border-radius: 12px;        /* Rounded corners */
-    font-weight: bold;          /* Bold text */
+    border-radius: 12px;        
+    font-weight: bold;          
     cursor: pointer;            /* Show pointer hover */
     font-size: 1.1rem;          /* Easy to read font size */
-    transition: transform 0.2s, filter 0.2s; /* Animation effects */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Subtle shadow */
+    transition: transform 0.2s, filter 0.2s; /* shrinks over 0.2s and brightness */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* adding a subtle shadow to make the buttons stand out more */
 }
 
-.status-toggle:active { 
-    transform: scale(0.95);     /* Click animation */
+.status-button:active { 
+    transform: scale(0.95);     /* click animation */
 }
 
-.status-toggle.green { background-color: var(--color-green); color: white; } /* Green button style */
-.status-toggle.red { background-color: var(--color-red); color: white; }    /* Red button style */
+.status-button.green { background-color: var(--color-green); color: white; } 
+.status-button.red { background-color: var(--color-red); color: white; }   
 
 /* --- 6. REASON BUTTONS --- */
 .reason-buttons { 
-    display: flex;              /* Buttons in a row */
-    justify-content: space-between; /* Spread them out */
+    display: flex;              /* Sets the buttons in a row */
+    justify-content: space-between; /* Spreads them out */
     gap: 12px;                  /* Small gap between buttons */
-    margin-bottom: 20px;        /* Space before feedback box */
-    animation: fadeIn 0.3s ease; /* Smooth entrance animation */
+    margin-bottom: 20px;        /* Space between reason buttons and feedback box */
+    animation: fadeIn 0.3s ease; /* got help with this animation from ChatGpt: https://chatgpt.com/share/6a0cb189-10e8-83eb-a21b-8b4fdab62c71 */
 }
 
-.reason-btn { 
-    flex: 1;                    /* All buttons take equal width */
-    padding: 10px;              /* Interior spacing */
-    border: 1.5px solid #dfe6e9; /* Light border */
+.reason-button { 
+    flex: 1;                    /* All buttons has the same width*/
+    padding: 10px;              
+    border: 1.5px solid #F5F5F5; 
     border-radius: 8px;         /* Rounded corners */
     background: white;          /* White background */
     cursor: pointer;            /* Hover pointer */
@@ -138,7 +138,7 @@ body {
     transition: all 0.2s;       /* Smooth color changes */
 }
 
-.reason-btn:hover { 
+.reason-button:hover { 
     border-color: var(--color-red); /* Border turns red on hover */
     color: var(--color-red);        /* Text turns red on hover */
     background: #fff5f5;            /* Very light red tint */
@@ -247,7 +247,7 @@ body {
 .indicator-green { background: var(--color-green); } /* Green dot */
 .indicator-red { background: var(--color-red); }     /* Red dot */
 
-/* --- 9. MODAL & POPUP STYLES --- */
+/* --- 9. MODAL & POPUP STYLES --- */ /*https://www.youtube.com/watch?v=RO40Opyizeg&t=96s*/
 .modal { 
     position: fixed;            /* Fixed on screen */
     top: 0;                     /* Top edge */
