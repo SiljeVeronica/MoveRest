@@ -100,9 +100,9 @@ body {
 
 .status-button { 
     padding: 18px;              /* Large clickable button */
-    border: none;               /* No border */
+    border: none;               
     border-radius: 12px;        
-    font-weight: bold;          
+    font-weight: bold;          /* got some tips from https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/font-weight */
     cursor: pointer;            /* Show pointer hover */
     font-size: 1.1rem;          /* Easy to read font size */
     transition: transform 0.2s, filter 0.2s; /* shrinks over 0.2s and brightness */
@@ -110,7 +110,8 @@ body {
 }
 
 .status-button:active { 
-    transform: scale(0.95);     /* click animation */
+    transform: scale(0.95);     /* shrinks slightly when clicked */
+    filter: brightness(0.9);    /*darkens a bit when clicked */
 }
 
 .status-button.green { background-color: var(--color-green); color: white; } 
@@ -126,38 +127,38 @@ body {
 }
 
 .reason-button { 
-    flex: 1;                    /* All buttons has the same width*/
+    flex: 1;                    /* All buttons has the same width https://www.w3schools.com/csSref/css3_pr_flex.php*/
     padding: 10px;              
-    border: 1.5px solid #F5F5F5; 
-    border-radius: 8px;         /* Rounded corners */
-    background: white;          /* White background */
-    cursor: pointer;            /* Hover pointer */
-    font-size: 0.85rem;         /* Small but readable */
+    border: 1.5px solid #dfe6e9; 
+    border-radius: 8px;         
+    background: white;         
+    cursor: pointer;            
+    font-size: 0.85rem;         
     font-weight: 600;           /* Semi-bold text */
-    color: #636e72;             /* Grey text */
-    transition: all 0.2s;       /* Smooth color changes */
+    color: #636e72;             
+    transition: all 0.2s;       /*All properties transitions smoothly */
 }
 
 .reason-button:hover { 
-    border-color: var(--color-red); /* Border turns red on hover */
-    color: var(--color-red);        /* Text turns red on hover */
-    background: #fff5f5;            /* Very light red tint */
+    border-color: var(--color-red);  /* Border, text and background turns red on hover */
+    color: var(--color-red);         
+    background: #fff5f5;           
 }
 
 /* --- 7. FEEDBACK BOX --- */
 .feedback-box { 
-    background: #eef7ff;        /* Light blue background */
-    border-left: 5px solid var(--primary-color); /* Blue indicator bar */
-    padding: 20px;              /* Space inside the box */
+    background: #eef7ff;       
+    border-left: 5px solid var(--primary-color); 
+    padding: 20px;              
     border-radius: 8px;         /* Small rounded corners */
     min-height: 80px;           /* Minimum height for consistency */
-    display: flex;              /* Center content */
+    display: flex;              /* Centering content */
     align-items: center;        /* Vertical centering */
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); /* Inner depth */
-    transition: all 0.3s ease;  /* Smooth state changes */
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); 
+    transition: all 0.3s ease;  
 }
 
-.feedback-box.empty { 
+.feedback-box.empty {      
     border-color: #dfe6e9;      /* Grey bar when empty */
     background: #fafafa;        /* Light grey background when empty */
     color: #b2bec3;             /* Faded text color */
@@ -165,8 +166,8 @@ body {
 
 #feedback-text { 
     font-size: 1rem;            /* Standard reading size */
-    line-height: 1.5;           /* Space between lines */
-    font-weight: 500;           /* Medium weight */
+    line-height: 1.5;           /* Space between lines https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/line-height */
+    font-weight: 500;           
 }
 
 /* --- 8. CALENDAR STYLES --- */
