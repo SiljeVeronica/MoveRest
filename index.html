@@ -49,18 +49,21 @@
                 
                 <!-- Step 1: Status Selection (How are you?) -->
                 <div id="step-1" class="modal-step">
+                    <div class="modal-header">
+                        <h3 id="registration-date-display">Registration for Today</h3>
+                    </div>
                     <h3>How are you today?</h3>
                     <div class="status-options">
-                        <button class="status-btn status-green" data-status="green">
-                            <span class="icon">??</span>
+                        <button class="status-btn status-green" data-status="green" aria-label="Green Day - Good Condition">
+                            <span class="icon">😊</span>
                             <span class="label">Green Day</span>
                         </button>
-                        <button class="status-btn status-red" data-status="red">
-                            <span class="icon">??</span>
+                        <button class="status-btn status-red" data-status="red" aria-label="Red Day - Bad Condition">
+                            <span class="icon">😔</span>
                             <span class="label">Red Day</span>
                         </button>
-                        <button class="status-btn status-brown" data-status="brown">
-                            <span class="icon">??</span>
+                        <button class="status-btn status-brown" data-status="brown" aria-label="Sick or Away">
+                            <span class="icon">🛌</span>
                             <span class="label">Sick/Away</span>
                         </button>
                     </div>
@@ -84,11 +87,11 @@
                         <div id="workout-details">
                             <div class="form-group">
                                 <label for="workout-type">Workout Type:</label>
-                                <input type="text" id="workout-type" placeholder="e.g. Running, Yoga">
+                                <input type="text" id="workout-type" placeholder="e.g. Running, Yoga, Strength">
                             </div>
                             <div class="form-group-row">
                                 <div class="form-group">
-                                    <label for="duration">Duration (min):</label>
+                                    <label for="duration">Duration (minutes):</label>
                                     <input type="number" id="duration" placeholder="30">
                                 </div>
                                 <div class="form-group">
@@ -105,7 +108,7 @@
                         <!-- General Note/Comment: Available for all statuses -->
                         <div class="form-group">
                             <label for="note">Comment / Note:</label>
-                            <textarea id="note" rows="3" placeholder="How did it go?"></textarea>
+                            <textarea id="note" rows="3" placeholder="e.g. Sick today, Good recovery, or On vacation"></textarea>
                         </div>
 
                         <!-- Final Save Button -->
@@ -116,7 +119,7 @@
                 <!-- Feedback Step: Shows a motivational message after saving -->
                 <div id="step-feedback" class="modal-step hidden">
                     <div class="feedback-content">
-                        <div id="feedback-icon" class="large-icon">?</div>
+                        <div id="feedback-icon" class="large-icon">✨</div>
                         <p id="feedback-message"></p>
                         <button id="close-feedback-btn" class="btn btn-secondary">Close</button>
                     </div>

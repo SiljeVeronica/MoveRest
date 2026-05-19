@@ -1,193 +1,176 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // --- State Management ---
-    const state = {
-        currentDate: new Date(),
-        selectedDate: null,
-        logs: JSON.parse(localStorage.getItem('moverest_logs')) || {}
-    };
+// 1. DATA STORAGE (Memory)
+let myLogs = JSON.parse(localStorage.getItem('moverest_logs')) || {}; // Load saved logs from browser storage.
+let viewingDate = new Date(); // Track which month is currently showing on the calendar.
+let selectedDateKey = ""; // Remember which day was clicked for history view.
 
-    // --- DOM Elements ---
-    const calendarGrid = document.getElementById('calendar-grid');
-    const monthYearDisplay = document.getElementById('current-month-year');
-    const prevMonthBtn = document.getElementById('prev-month');
-    const nextMonthBtn = document.getElementById('next-month');
-    const addEntryBtn = document.getElementById('add-entry-btn');
-    const modal = document.getElementById('registration-modal');
-    const closeBtn = document.querySelector('.close-btn');
-    const entryForm = document.getElementById('entry-form');
-    const steps = {
-        1: document.getElementById('step-1'),
-        2: document.getElementById('step-2'),
-        feedback: document.getElementById('step-feedback')
-    };
+// 2. FINDING ELEMENTS ON THE PAGE (Connecting JS to HTML)
+const calendarGrid = document.getElementById('calendar-grid'); // Find the calendar grid area.
+const monthLabel = document.getElementById('current-month-year'); // Find the Month/Year header.
+const feedbackBox = document.getElementById('feedback-display'); // Find the feedback container.
+const feedbackText = document.getElementById('feedback-text'); // Find the text inside the feedback box.
+const redReasonSection = document.getElementById('quick-red-reasons'); // Find the quick-red reasons section.
+const regModal = document.getElementById('registration-modal'); // Find the registration popup.
+const viewModal = document.getElementById('view-data-modal'); // Find the history popup.
 
-    // --- Calendar Functions ---
-    function renderCalendar() {
-        calendarGrid.innerHTML = '';
-        const year = state.currentDate.getFullYear();
-        const month = state.currentDate.getMonth();
-        
-        monthYearDisplay.textContent = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(state.currentDate);
+// 3. CALENDAR LOGIC - here we build the calendar and fill in the data from memory
+function drawCalendar() { // Function to draw the calendar month.
+    calendarGrid.innerHTML = ''; // Wipe the calendar clean before drawing.
+    const year = viewingDate.getFullYear(); // Get year from current view date.
+    const month = viewingDate.getMonth(); // Get month from current view date.
+    monthLabel.textContent = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(viewingDate); // Set header text.
 
-        const firstDayOfMonth = new Date(year, month, 1).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        
-        // Adjust for Monday start (0=Sun, 1=Mon... -> 1=Mon, 0=Sun)
-        let adjustedStart = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
+    const firstDayIndex = new Date(year, month, 1).getDay(); // Find first weekday of the month.
+    const totalDays = new Date(year, month + 1, 0).getDate(); // Find total days in the month.
+    let emptySpaces = firstDayIndex === 0 ? 6 : firstDayIndex - 1; // Calculate leading empty boxes.
 
-        // Empty cells for previous month
-        for (let i = 0; i < adjustedStart; i++) {
-            const emptyCell = document.createElement('div');
-            emptyCell.classList.add('calendar-day', 'empty');
-            calendarGrid.appendChild(emptyCell);
-        }
+    for (let i = 0; i < emptySpaces; i++) { // Loop to create empty gaps.
+        const space = document.createElement('div'); // Create a box.
+        space.className = 'calendar-day empty'; // Mark it as empty.
+        calendarGrid.appendChild(space); // Add to the grid.
+    } // End of gap loop.
 
-        // Days of current month
-        for (let day = 1; day <= daysInMonth; day++) {
-            const dayCell = document.createElement('div');
-            dayCell.classList.add('calendar-day');
-            dayCell.textContent = day;
+    for (let day = 1; day <= totalDays; day++) { // Loop for every real day.
+        const dayBox = document.createElement('div'); // Create day box.
+        dayBox.className = 'calendar-day'; // Give it standard styling.
+        dayBox.textContent = day; // Write day number.
 
-            const dateKey = \-\-\;
-            
-            // Check if today
-            const today = new Date();
-            if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
-                dayCell.classList.add('today');
-            }
+        const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`; // Unique date ID.
+        const today = new Date(); // Get today's real date.
+        if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) { // If it matches today:
+            dayBox.classList.add('today'); // Add highlight style.
+        } // End today check.
 
-            // Check for existing logs
-            if (state.logs[dateKey]) {
-                const indicator = document.createElement('div');
-                indicator.classList.add('day-indicator', indicator-\);
-                dayCell.appendChild(indicator);
-            }
+        if (myLogs[dateKey]) { // If data exists for this day:
+            const dot = document.createElement('div'); // Create indicator dot.
+            dot.className = `day-indicator indicator-${myLogs[dateKey].status}`; // Set color.
+            dayBox.appendChild(dot); // Put dot in box.
+        } // End data check.
 
-            dayCell.onclick = () => openModal(dateKey);
-            calendarGrid.appendChild(dayCell);
-        }
-    }
+        dayBox.onclick = () => { // When day is clicked:
+            selectedDateKey = dateKey; // Remember the date ID.
+            if (myLogs[dateKey]) showHistoryPopup(myLogs[dateKey], dateKey); // Show info if it exists.
+        }; // End click handler.
 
-    // --- Modal Logic ---
-    let currentStatus = null;
-    let activeDateKey = null;
+        calendarGrid.appendChild(dayBox); // Add day box to grid.
+    } // End days loop.
+} // End drawCalendar function.
 
-    function openModal(dateKey) {
-        activeDateKey = dateKey;
-        modal.classList.remove('hidden');
-        showStep(1);
-        entryForm.reset();
-    }
+// 4. FEEDBACK & SAVING (The logic)
+function getAdvice(status, reason) { // Function to pick advice text.
+    if (status === 'green') return "Great job! Keep the momentum going. Your body thanks you! 🔥"; // Green advice.
+    if (reason === 'Pain') return "Recommendation: Please rest today to recover. Your health comes first! 🛡️"; // Pain advice.
+    if (reason === 'Low Energy') return "Recommendation: A lighter activity or a walk might help boost your mood. 🚶‍♂️"; // Energy advice.
+    if (reason === 'Discomfort') return "Recommendation: Try some gentle stretching or mobility work today. 🧘"; // Discomfort advice.
+    return "Taking it easy is a smart move. Rest up! ✨"; // Default advice.
+} // End getAdvice function.
 
-    function closeModal() {
-        modal.classList.add('hidden');
-    }
+function saveEntry(status, details = {}) { // Function to save data.
+    const today = new Date(); // Get current date.
+    const dateKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`; // Today's ID.
+    myLogs[dateKey] = { status, ...details, time: new Date().toISOString() }; // Add data to memory.
+    localStorage.setItem('moverest_logs', JSON.stringify(myLogs)); // Save memory permanently.
+    drawCalendar(); // Update calendar dots.
+} // End saveEntry function.
 
-    function showStep(stepNum) {
-        Object.values(steps).forEach(s => s.classList.add('hidden'));
-        steps[stepNum].classList.remove('hidden');
-    }
+function setFeedback(message, isWaiting = false) { // Function to update main screen text.
+    feedbackBox.classList.remove('empty'); // Make feedback box active.
+    if (isWaiting) feedbackBox.classList.add('empty'); // Keep it light if waiting.
+    feedbackText.textContent = message; // Set message text.
+} // End setFeedback function.
 
-    // Status Selection
-    document.querySelectorAll('.status-btn').forEach(btn => {
-        btn.onclick = () => {
-            currentStatus = btn.dataset.status;
-            setupStep2(currentStatus);
-            showStep(2);
-        };
+// 5. BUTTON CLICKS (User Actions)
+document.getElementById('quick-green-btn').onclick = () => { // Green button click:
+    redReasonSection.classList.add('hidden'); // Hide reasons.
+    saveEntry('green'); // Save green status.
+    setFeedback(getAdvice('green')); // Show advice.
+}; // End green click.
+
+document.getElementById('quick-red-btn').onclick = () => { // Red button click:
+    redReasonSection.classList.remove('hidden'); // Show reasons.
+    setFeedback("Please select a reason below...", true); // Ask for reason.
+}; // End red click.
+
+document.querySelectorAll('.reason-btn').forEach(btn => { // For each reason button:
+    btn.onclick = () => { // When clicked:
+        const why = btn.dataset.reason; // Get reason name.
+        saveEntry('red', { reason: why }); // Save red with reason.
+        setFeedback(getAdvice('red', why)); // Show specific advice.
+    }; // End click.
+}); // End reason loop.
+
+// 6. POPUP (MODAL) CONTROLS
+document.getElementById('manual-add-btn').onclick = () => regModal.classList.remove('hidden'); // Show registration popup.
+document.getElementById('close-reg-modal').onclick = () => regModal.classList.add('hidden'); // Hide registration popup.
+document.getElementById('close-view-modal').onclick = () => viewModal.classList.add('hidden'); // Hide history popup.
+
+let currentModalStatus = 'green'; // Track status in popup.
+const miniGreen = document.getElementById('modal-status-green'); // Mini green button.
+const miniRed = document.getElementById('modal-status-red'); // Mini red button.
+const modalReasons = document.getElementById('modal-red-reasons'); // Popup reasons area.
+
+miniGreen.onclick = () => { // Mini green click:
+    currentModalStatus = 'green'; // Set status.
+    miniGreen.classList.add('selected'); // Highlight button.
+    miniRed.classList.remove('selected'); // Un-highlight other.
+    modalReasons.classList.add('hidden'); // Hide reasons.
+}; // End mini green click.
+
+miniRed.onclick = () => { // Mini red click:
+    currentModalStatus = 'red'; // Set status.
+    miniRed.classList.add('selected'); // Highlight button.
+    miniGreen.classList.remove('selected'); // Un-highlight other.
+    modalReasons.classList.remove('hidden'); // Show reasons.
+}; // End mini red click.
+
+document.getElementById('entry-form').onsubmit = (event) => { // Form save clicked:
+    event.preventDefault(); // Don't refresh page.
+    const chosenReason = currentModalStatus === 'red' ? document.querySelector('input[name="modal-reason"]:checked')?.value : null; // Get reason if red.
+    saveEntry(currentModalStatus, { // Save everything.
+        workoutType: document.getElementById('workout-type').value,
+        duration: document.getElementById('duration').value,
+        intensity: document.getElementById('intensity').value,
+        note: document.getElementById('note').value,
+        reason: chosenReason
     });
+    regModal.classList.add('hidden'); // Close popup.
+    setFeedback(getAdvice(currentModalStatus, chosenReason)); // Show advice.
+    event.target.reset(); // Clear form.
+    miniGreen.click(); // Reset status to green.
+}; // End form submit.
 
-    function setupStep2(status) {
-        const title = document.getElementById('step-2-title');
-        const redReasons = document.getElementById('red-reasons');
-        const workoutDetails = document.getElementById('workout-details');
+// 7. VIEWING HISTORY (Calendar popup)
+function showHistoryPopup(data, date) { // Function to show history window.
+    document.getElementById('view-date-title').textContent = `Details for ${date}`; // Set date title.
+    const statusText = document.getElementById('view-status-val'); // Status label.
+    statusText.textContent = data.status === 'green' ? '😊 Green Day' : '😔 Red Day'; // Write status.
+    statusText.style.color = data.status === 'green' ? 'var(--color-green)' : 'var(--color-red)'; // Set color.
 
-        redReasons.classList.add('hidden');
-        workoutDetails.classList.add('hidden');
+    const rRow = document.getElementById('view-reason-row'); // Reason row.
+    if (data.reason) { rRow.classList.remove('hidden'); document.getElementById('view-reason-val').textContent = data.reason; } // Show if exists.
+    else { rRow.classList.add('hidden'); } // Hide if not.
 
-        if (status === 'green') {
-            title.textContent = "Great! Tell us about your workout";
-            workoutDetails.classList.remove('hidden');
-        } else if (status === 'red') {
-            title.textContent = "It's okay to have a red day. What's wrong?";
-            redReasons.classList.remove('hidden');
-            workoutDetails.classList.remove('hidden'); // Red days can still have workouts
-        } else if (status === 'brown') {
-            title.textContent = "Rest up! Any notes?";
-            // Just comment for brown
-        }
-    }
+    const wRow = document.getElementById('view-workout-row'); // Workout row.
+    if (data.workoutType) { wRow.classList.remove('hidden'); document.getElementById('view-workout-val').textContent = `${data.workoutType} (${data.duration}m)`; } // Show if exists.
+    else { wRow.classList.add('hidden'); } // Hide if not.
 
-    // Form Submission
-    entryForm.onsubmit = (e) => {
-        e.preventDefault();
-        
-        const logEntry = {
-            status: currentStatus,
-            date: activeDateKey,
-            workoutType: document.getElementById('workout-type').value,
-            duration: document.getElementById('duration').value,
-            intensity: document.getElementById('intensity').value,
-            reason: document.querySelector('input[name="reason"]:checked')?.value || null,
-            note: document.getElementById('note').value,
-            timestamp: new Date().toISOString()
-        };
+    const nRow = document.getElementById('view-note-row'); // Note row.
+    if (data.note) { nRow.classList.remove('hidden'); document.getElementById('view-note-val').textContent = data.note; } // Show if exists.
+    else { nRow.classList.add('hidden'); } // Hide if not.
+    viewModal.classList.remove('hidden'); // Show history popup.
+} // End history function.
 
-        state.logs[activeDateKey] = logEntry;
-        localStorage.setItem('moverest_logs', JSON.stringify(state.logs));
-        
-        showFeedback(logEntry);
-        renderCalendar();
-    };
+document.getElementById('delete-entry-btn').onclick = () => { // Delete clicked:
+    if (selectedDateKey && myLogs[selectedDateKey]) { // If data exists:
+        delete myLogs[selectedDateKey]; // Wipe from memory.
+        localStorage.setItem('moverest_logs', JSON.stringify(myLogs)); // Update permanent storage.
+        viewModal.classList.add('hidden'); // Close popup.
+        drawCalendar(); // Refresh calendar.
+        setFeedback("Entry deleted from history."); // Confirm delete.
+    } // End safety check.
+}; // End delete handler.
 
-    function showFeedback(entry) {
-        const icon = document.getElementById('feedback-icon');
-        const msg = document.getElementById('feedback-message');
+// 8. NAVIGATION (Arrows)
+document.getElementById('prev-month').onclick = () => { viewingDate.setMonth(viewingDate.getMonth() - 1); drawCalendar(); }; // Back one month.
+document.getElementById('next-month').onclick = () => { viewingDate.setMonth(viewingDate.getMonth() + 1); drawCalendar(); }; // Forward one month.
 
-        if (entry.status === 'green') {
-            icon.textContent = '??';
-            msg.textContent = "Great job! Keep the momentum going. Your body thanks you!";
-        } else if (entry.status === 'red') {
-            icon.textContent = '???';
-            if (entry.reason === 'Pain') {
-                msg.textContent = "Listen to your body. Recovery is just as important as the workout. Consider resting today.";
-            } else if (entry.reason === 'Low Energy') {
-                msg.textContent = "Maybe a lighter activity or a walk would help? Don't push too hard.";
-            } else {
-                msg.textContent = "Taking it easy today is a smart move. You'll come back stronger!";
-            }
-        } else {
-            icon.textContent = '???';
-            msg.textContent = "Rest is productive! Focus on recovery and feeling better.";
-        }
-
-        showStep('feedback');
-    }
-
-    // --- Event Listeners ---
-    prevMonthBtn.onclick = () => {
-        state.currentDate.setMonth(state.currentDate.getMonth() - 1);
-        renderCalendar();
-    };
-
-    nextMonthBtn.onclick = () => {
-        state.currentDate.setMonth(state.currentDate.getMonth() + 1);
-        renderCalendar();
-    };
-
-    addEntryBtn.onclick = () => {
-        const today = new Date();
-        const dateKey = \-\-\;
-        openModal(dateKey);
-    };
-
-    closeBtn.onclick = closeModal;
-    document.getElementById('close-feedback-btn').onclick = closeModal;
-
-    window.onclick = (event) => {
-        if (event.target == modal) closeModal();
-    };
-
-    // Initial Render
-    renderCalendar();
-});
+drawCalendar(); // Start by drawing the current month.

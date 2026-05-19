@@ -9,7 +9,7 @@ The purpose of the application is to encourage healthier habits and make it easi
 
 ## Functional Requirements
 
-### Manual Workout Registration
+### Manual Registration
 
 The user must be able to manually register a workout session.
 

@@ -1,336 +1,413 @@
-/* --- CSS Custom Properties (Variables) --- 
-   These define our color palette and theme constants for easy maintenance.
-*/
+/* --- 1. Theme colors --- */
+
+/*Firstly we defined our color palette and some global styles that we will be using throughout the app.
+This makes it easier to change the look of the app later by just adjusting these variables*/
+
+/*Found colors on https://htmlcolorcodes.com/ */
+/*Used ChatGpt to help visualize the architecture of the CSS file and to make sure we have a solid structure to build on as we add more features to the app: https://chatgpt.com/share/6a0b3e8a-7d58-83eb-8d3b-30c26fde583c */
+
+
 :root {
-    --primary-color: #4a90e2;    /* Main brand color (Blue) */
-    --secondary-color: #f5f7fa;  /* Light grey for backgrounds */
-    --text-color: #2d3436;       /* Dark grey for readable text */
-    --bg-color: #f0f2f5;         /* App background color */
-    --card-bg: #ffffff;          /* White background for cards */
-    --color-green: #2ecc71;      /* Success/Healthy status */
-    --color-red: #e74c3c;        /* Warning/Struggle status */
-    --color-brown: #a0522d;      /* Sick/Away status */
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Standard drop shadow */
-    --radius: 12px;              /* Standard rounded corners */
+    --primary-color: #39B1ED;    /* Blue color for + button and save button*/
+    --bg-color: #F5F5F5;         /* A very light grey color for the background */
+    --surface-bg: #ffffff;       /* White for the content boxes */
+    --color-green: #33D45B;      /* Green color for good days */
+    --color-red: #E64C4C;        /* Red color for bad days */
+    --text-color: #2E2D2D;       /* Dark grey for easy reading */
+    --shadow: 0 4px 15px rgba(0,0,0,0.08); /* Subtle shadow, found on https://getcssscan.com/css-box-shadow-examples */
+    --radius: 16px;                /* Rounded corners */
+    --danger-color: #ff7675;     /* Softer red for delete buttons */
 }
 
-/* --- Global Reset and Base Styles --- */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* --- 2.Basic Layout --- */
+
+/* The * means that we want to apply these styles to all elements on the page.
+First we set the box sizing to border-box so that it doesn't break our layout when adding padding.
+Then we remove deafult margin and padding that browsers add to elements, and set a clean font for the whole app*/
+* { 
+    box-sizing: border-box;     /* Making sure padding doesn't break width */
+    margin: 0;                  /* Removing the default margin */
+    padding: 0;                 /* Removing the default padding */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Clean font, finding some tips here: https://css-tricks.com/snippets/css/font-stacks/ and https://www.w3schools.com/cssref/css_websafe_fonts.php and the youtube video below*/
 }
 
-body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    line-height: 1.6;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
+/*We have used different guides as referenced in the comments to build the layout of the app, but the generak idea is to use flexbox to center the content and give it some breathing room with padding. We also set a max-with for the main container so that it doesn't get too wide on desktop screens, and to make sure the backround color covers the whole screen we set a min-height of 100vh (which means 100% of the viewport height)*/
+/*https://www.youtube.com/watch?v=yNyR_A73eTI - great video on building a centered card layout with flexbox and grid*/
+body { 
+    background-color: var(--bg-color); /* Here we set the app background color */
+    color: var(--text-color);           /* Here we set the default text color */
+    display: flex;                      /* We used flexbox to center content https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Flexible_box_layout/Basic_concepts */
+    justify-content: center;            /* Centering horizontally https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/justify-content*/
+    padding: 20px;                      /* Added some room around the edges */
+    min-height: 100vh;                  /* Ensuring the background covers full height */
 }
 
-.app-container {
-    width: 100%;
-    max-width: 500px; /* Limits width on desktop for mobile-like feel */
+.app-container { 
+    width: 100%;                /* Takes up available width */
+    max-width: 450px;           /* But don't get too wide on desktop, without this the container would stretch to the full width */
 }
 
-/* --- Typography --- */
-header {
-    text-align: center;
-    margin-bottom: 30px;
+/* --- 3. HEADER & ADD BUTTON --- */
+.header-top { 
+    display: flex;              /* Putting the title and button on same line */
+    justify-content: space-between; /* Pushing the  title to the left and button to the right */
+    align-items: center;        /* aligning them in the center */
+    margin-bottom: 5px;         /* Putting some space below the header */
 }
 
-header h1 {
-    color: var(--primary-color);
-    font-size: 2.5rem;
+.add-btn { 
+    background: var(--primary-color); /* We want the add button to have a blue background */
+    color: white;                   /* White plus symbol */
+    border: none;                     /* Removing default border */
+    width: 44px;                      
+    height: 44px;                     
+    border-radius: 50%;               /* Making it a perfect circle */
+    font-size: 1.8rem;                /* Making the plus symbol large */
+    cursor: pointer;                  /* This shows the pointer when hovering over it */
+    display: flex;                    /* Centering the plus symbol inside */
+    align-items: center;              /* vertically centering */
+    justify-content: center;          /* Horizontal centering */
+    box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3); /* Blue shadow */
+    transition: transform 0.2s;       /* the button gets a smooth transition when hovered */
 }
 
-.subtitle {
-    color: #636e72;
-    font-size: 1rem;
+.add-btn:active { 
+    transform: scale(0.9);      /* The add button shrinks slightly when clicked, The button is then 90 % of its original size */
 }
 
-/* --- Card Components --- */
-.card {
-    background: var(--card-bg);
-    border-radius: var(--radius);
-    padding: 20px;
-    box-shadow: var(--shadow);
-    margin-bottom: 20px;
+.subtitle { 
+    color: #949392 ;          /* Giving the subtitle a lighter grey color*/
+    font-size: 0.95rem;         
+    margin-bottom: 25px;        /* Giving some space before the first card */
 }
 
-/* --- Calendar Styles --- */
-.calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+/* --- 4. CARDS --- */
+.card { 
+    background: var(--card-bg); /* White background */
+    border-radius: var(--radius); /* Rounded corners as stadet in root */
+    padding: 25px;              /* Spacing inside the card */
+    box-shadow: var(--shadow);  /* Drop shadow for depth */
+    margin-bottom: 25px;        /* Space between cards */
 }
 
-.calendar-header button {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-    color: var(--primary-color);
-    padding: 5px 10px;
+/* --- 5. QUICK STATUS BUTTONS --- */
+.status-toggle-buttons { 
+    display: grid;              /* Create a grid for buttons */
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 20px;                  /* Space between the two buttons */
+    margin: 20px 0;             /* Space above and below button group */
 }
 
-.calendar-days-header {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 7 columns for 7 days */
-    text-align: center;
-    font-weight: bold;
-    font-size: 0.8rem;
-    color: #b2bec3;
-    margin-bottom: 10px;
+.status-toggle { 
+    padding: 18px;              /* Large clickable area */
+    border: none;               /* No border */
+    border-radius: 12px;        /* Rounded corners */
+    font-weight: bold;          /* Bold text */
+    cursor: pointer;            /* Show pointer hover */
+    font-size: 1.1rem;          /* Easy to read font size */
+    transition: transform 0.2s, filter 0.2s; /* Animation effects */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Subtle shadow */
 }
 
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+.status-toggle:active { 
+    transform: scale(0.95);     /* Click animation */
 }
 
-.calendar-day {
-    aspect-ratio: 1; /* Makes cells square */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s;
-    position: relative;
+.status-toggle.green { background-color: var(--color-green); color: white; } /* Green button style */
+.status-toggle.red { background-color: var(--color-red); color: white; }    /* Red button style */
+
+/* --- 6. REASON BUTTONS --- */
+.reason-buttons { 
+    display: flex;              /* Buttons in a row */
+    justify-content: space-between; /* Spread them out */
+    gap: 12px;                  /* Small gap between buttons */
+    margin-bottom: 20px;        /* Space before feedback box */
+    animation: fadeIn 0.3s ease; /* Smooth entrance animation */
 }
 
-.calendar-day:hover {
-    background-color: var(--secondary-color);
-    transform: scale(1.05);
+.reason-btn { 
+    flex: 1;                    /* All buttons take equal width */
+    padding: 10px;              /* Interior spacing */
+    border: 1.5px solid #dfe6e9; /* Light border */
+    border-radius: 8px;         /* Rounded corners */
+    background: white;          /* White background */
+    cursor: pointer;            /* Hover pointer */
+    font-size: 0.85rem;         /* Small but readable */
+    font-weight: 600;           /* Semi-bold text */
+    color: #636e72;             /* Grey text */
+    transition: all 0.2s;       /* Smooth color changes */
 }
 
-.calendar-day.today {
-    border: 2px solid var(--primary-color);
-    font-weight: bold;
+.reason-btn:hover { 
+    border-color: var(--color-red); /* Border turns red on hover */
+    color: var(--color-red);        /* Text turns red on hover */
+    background: #fff5f5;            /* Very light red tint */
 }
 
-.calendar-day.empty {
-    cursor: default;
+/* --- 7. FEEDBACK BOX --- */
+.feedback-box { 
+    background: #eef7ff;        /* Light blue background */
+    border-left: 5px solid var(--primary-color); /* Blue indicator bar */
+    padding: 20px;              /* Space inside the box */
+    border-radius: 8px;         /* Small rounded corners */
+    min-height: 80px;           /* Minimum height for consistency */
+    display: flex;              /* Center content */
+    align-items: center;        /* Vertical centering */
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); /* Inner depth */
+    transition: all 0.3s ease;  /* Smooth state changes */
 }
 
-.calendar-day.empty:hover {
-    background-color: transparent;
-    transform: none;
+.feedback-box.empty { 
+    border-color: #dfe6e9;      /* Grey bar when empty */
+    background: #fafafa;        /* Light grey background when empty */
+    color: #b2bec3;             /* Faded text color */
 }
 
-/* Indicators for logged statuses on the calendar */
-.day-indicator {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-top: 4px;
+#feedback-text { 
+    font-size: 1rem;            /* Standard reading size */
+    line-height: 1.5;           /* Space between lines */
+    font-weight: 500;           /* Medium weight */
 }
 
-.indicator-green { background-color: var(--color-green); }
-.indicator-red { background-color: var(--color-red); }
-.indicator-brown { background-color: var(--color-brown); }
-
-/* --- Button Styles --- */
-.actions {
-    display: flex;
-    justify-content: center;
+/* --- 8. CALENDAR STYLES --- */
+.calendar-header { 
+    display: flex;              /* Row layout */
+    justify-content: space-between; /* Push arrows to edges */
+    align-items: center;        /* Align arrows with text */
+    margin-bottom: 20px;        /* Space before days */
 }
 
-.btn {
-    padding: 12px 24px;
-    border-radius: 30px;
-    border: none;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
+.calendar-header h2 { 
+    font-size: 1.2rem;          /* Clear month title */
+    color: var(--text-color);   /* Dark text */
 }
 
-.btn-primary {
-    background-color: var(--primary-color);
-    color: white;
+.calendar-header button { 
+    background: #f0f2f5;        /* Light background for arrow buttons */
+    border: none;               /* No border */
+    cursor: pointer;            /* Pointer hover */
+    font-size: 1.2rem;          /* Large arrows */
+    color: var(--primary-color);/* Blue arrows */
+    width: 36px;                /* Square width */
+    height: 36px;               /* Square height */
+    border-radius: 50%;         /* Circular buttons */
+    display: flex;              /* Center the icon */
+    align-items: center;        /* Vertical center */
+    justify-content: center;    /* Horizontal center */
 }
 
-.btn-primary:hover {
-    background-color: #357abd;
+.calendar-days-header { 
+    display: grid;              /* 7-column layout */
+    grid-template-columns: repeat(7, 1fr); /* 7 equal columns */
+    text-align: center;         /* Center the labels */
+    font-size: 0.8rem;          /* Smaller text */
+    font-weight: bold;          /* Bold days (M, T, W...) */
+    color: #b2bec3;             /* Light grey labels */
+    margin-bottom: 12px;        /* Space before numbers */
 }
 
-.btn-secondary {
-    background-color: #dfe6e9;
-    color: var(--text-color);
+.calendar-grid { 
+    display: grid;              /* Grid for day boxes */
+    grid-template-columns: repeat(7, 1fr); /* 7 columns */
+    gap: 8px;                   /* Gap between day boxes */
 }
 
-.btn:active {
-    transform: scale(0.98);
+.calendar-day { 
+    aspect-ratio: 1;            /* Ensure squares */
+    display: flex;              /* Center the number */
+    flex-direction: column;     /* Stack number and dot */
+    align-items: center;        /* Horizontal center */
+    justify-content: center;    /* Vertical center */
+    border-radius: 10px;        /* Rounded squares */
+    font-size: 0.9rem;          /* Easy to read numbers */
+    cursor: pointer;            /* Pointer hover */
+    position: relative;         /* Position for absolute indicator */
+    background: #fff;           /* White background */
+    transition: background 0.2s;/* Hover effect transition */
 }
 
-.full-width {
-    width: 100%;
-    margin-top: 15px;
+.calendar-day:hover:not(.empty) { 
+    background: #f0f7ff;        /* Light blue hover color */
 }
 
-/* --- Modal Styles (Popups) --- */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: 20px;
+.calendar-day.today { 
+    font-weight: bold;          /* Bold today's number */
+    color: var(--primary-color);/* Blue text for today */
+    background: #eef7ff;        /* Very light blue background */
 }
 
-.modal.hidden {
-    display: none;
+.day-indicator { 
+    width: 8px;                 /* Tiny dot size */
+    height: 8px;                /* Tiny dot size */
+    border-radius: 50%;         /* Circle shape */
+    position: absolute;         /* Floating position */
+    bottom: 6px;                /* Near the bottom edge */
 }
 
-.modal-content {
-    background: white;
-    width: 100%;
-    max-width: 400px;
-    border-radius: var(--radius);
-    padding: 30px;
-    position: relative;
-    max-height: 90vh; /* Prevents modal from going off-screen */
-    overflow-y: auto; /* Adds scroll if content is long */
+.indicator-green { background: var(--color-green); } /* Green dot */
+.indicator-red { background: var(--color-red); }     /* Red dot */
+
+/* --- 9. MODAL & POPUP STYLES --- */
+.modal { 
+    position: fixed;            /* Fixed on screen */
+    top: 0;                     /* Top edge */
+    left: 0;                    /* Left edge */
+    width: 100%;                /* Cover screen */
+    height: 100%;               /* Cover screen */
+    background: rgba(0,0,0,0.6);/* Dark overlay */
+    display: flex;              /* Center the window */
+    align-items: center;        /* Center vertically */
+    justify-content: center;    /* Center horizontally */
+    z-index: 1000;              /* Always on top */
+    padding: 20px;              /* Room for mobile browsers */
+    backdrop-filter: blur(4px); /* Blur effect behind popup */
 }
 
-.close-btn {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #b2bec3;
+.modal-content { 
+    background: white;          /* Window background */
+    width: 100%;                /* Full width of container */
+    max-width: 380px;           /* But not too wide */
+    padding: 30px;              /* Interior breathing room */
+    border-radius: var(--radius);/* Rounded corners */
+    position: relative;         /* For absolute close button */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2); /* Deep shadow */
 }
 
-.modal-step.hidden {
-    display: none;
+.close-btn { 
+    position: absolute;         /* Float inside content */
+    top: 15px;                  /* From top */
+    right: 20px;                /* From right */
+    cursor: pointer;            /* Hover pointer */
+    font-size: 1.5rem;          /* Large X */
+    color: #b2bec3;             /* Light grey X */
 }
 
-/* Status selection buttons (Green/Red/Brown) */
-.status-options {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 25px;
+/* --- 10. FORM STYLES --- */
+.form-group { 
+    margin-bottom: 20px;        /* Space between fields */
 }
 
-.status-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: none;
-    border: 2px solid #dfe6e9;
-    border-radius: 12px;
-    padding: 15px;
-    cursor: pointer;
-    width: 100px;
-    transition: all 0.2s;
+.form-group label { 
+    display: block;             /* Label on own line */
+    font-size: 0.9rem;          /* Readable size */
+    margin-bottom: 8px;         /* Space before input */
+    font-weight: bold;          /* Bold labels */
 }
 
-.status-btn .icon {
-    font-size: 2rem;
-    margin-bottom: 8px;
+.form-group input, .form-group select, .form-group textarea { 
+    width: 100%;                /* Full width inputs */
+    padding: 12px;              /* Space for typing */
+    border: 1px solid #ddd;     /* Simple border */
+    border-radius: 8px;         /* Rounded inputs */
+    font-size: 1rem;            /* Easy to read text */
 }
 
-.status-btn .label {
-    font-size: 0.8rem;
-    font-weight: bold;
+.form-group-row { 
+    display: grid;              /* Multi-column row */
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 15px;                  /* Gap between row fields */
 }
 
-/* Hover effects for status buttons using specific theme colors */
-.status-btn:hover {
-    border-color: var(--primary-color);
-    background-color: #f0f7ff;
+/* --- 11. MODAL STATUS SELECTION --- */
+.modal-status-toggle { 
+    display: grid;              /* Grid layout */
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 10px;                  /* Small gap */
+    margin-bottom: 15px;        /* Space before form */
 }
 
-.status-green:hover { border-color: var(--color-green); background-color: #e8f8f0; }
-.status-red:hover { border-color: var(--color-red); background-color: #fdf2f1; }
-.status-brown:hover { border-color: var(--color-brown); background-color: #f7f1ef; }
-
-/* --- Form Styles --- */
-.form-group {
-    margin-top: 20px;
+.status-mini { 
+    padding: 10px;              /* Compact size */
+    border: 2px solid #dfe6e9;  /* Light border */
+    border-radius: 8px;         /* Rounded corners */
+    background: white;          /* Default background */
+    cursor: pointer;            /* Pointer finger */
+    font-weight: 600;           /* Semi-bold */
+    font-size: 0.85rem;         /* Small font */
+    transition: all 0.2s;       /* Smooth toggle */
+    color: #636e72;             /* Default grey text */
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    font-size: 0.9rem;
+.status-mini.green.selected { 
+    background-color: var(--color-green); /* Green when active */
+    color: white; border-color: var(--color-green); 
 }
 
-.form-group input, .form-group select, .form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #dfe6e9;
-    border-radius: 8px;
-    font-size: 1rem;
+.status-mini.red.selected { 
+    background-color: var(--color-red);   /* Red when active */
+    color: white; border-color: var(--color-red); 
 }
 
-.form-group-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
+/* --- 12. VIEW DETAILS (History Modal) --- */
+.view-details-container { 
+    margin: 20px 0;             /* Vertical spacing */
+    display: flex;              /* Column layout */
+    flex-direction: column;     /* Stack detail items */
+    gap: 15px;                  /* Space between items */
 }
 
-.reason-options {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+.detail-item { 
+    display: flex;              /* Label and value in a row */
+    justify-content: space-between; /* Space between them */
+    align-items: flex-start;    /* Top align */
+    padding-bottom: 10px;       /* Room below */
+    border-bottom: 1px solid #f0f2f5; /* Separator line */
 }
 
-.reason-options label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: normal;
-    cursor: pointer;
+.detail-label { font-weight: bold; color: #636e72; font-size: 0.9rem; } /* Grey labels */
+.detail-val { color: var(--text-color); font-weight: 600; text-align: right; } /* Dark values */
+
+.detail-note-val { 
+    color: var(--text-color);   /* Dark text */
+    font-style: italic;         /* Italic for notes */
+    background: #f8f9fa;        /* Light box for note */
+    padding: 10px;              /* Room inside note */
+    border-radius: 8px;         /* Rounded corners */
+    width: 100%;                /* Take full width */
+    margin-top: 5px;            /* Space above */
+    font-size: 0.9rem;          /* Readable size */
 }
 
-/* --- Feedback View Styles --- */
-.feedback-content {
-    text-align: center;
+/* --- 13. BUTTON VARIANTS --- */
+
+.btn-primary { 
+    background: var(--primary-color); /* Main blue */
+    color: white;                     /* White text */
+    border: none;                     /* No border */
+    padding: 14px;                    /* Big clickable area */
+    border-radius: 8px;               /* Rounded corners */
+    cursor: pointer;                  /* Pointer hover */
+    font-weight: bold;                /* Bold text */
+    font-size: 1rem;                  /* Standard size */
+    transition: background 0.2s;      /* Smooth color change */
+    margin-top: 10px;                 /* Space above */
 }
 
-.large-icon {
-    font-size: 4rem;
-    margin-bottom: 20px;
+.btn-primary:hover { background: #357abd; } /* Darker blue on hover */
+
+.btn-danger { 
+    background: white;                /* White background */
+    color: var(--danger-color);       /* Red text */
+    border: 2px solid var(--danger-color); /* Red outline */
+    padding: 12px;                    /* Interior room */
+    border-radius: 8px;               /* Rounded corners */
+    cursor: pointer;                  /* Pointer hover */
+    font-weight: bold;                /* Bold text */
+    margin-top: 20px;                 /* Space above */
+    transition: all 0.2s;             /* Smooth interaction */
 }
 
-#feedback-message {
-    font-size: 1.1rem;
-    margin-bottom: 25px;
-    color: #2d3436;
+.btn-danger:hover { 
+    background: var(--danger-color);  /* Solid red on hover */
+    color: white;                     /* White text on hover */
 }
 
-.hidden {
-    display: none !important;
-}
+.full-width { width: 100%; }         /* Utility for full width buttons */
 
-/* --- Mobile Responsiveness --- */
-@media (max-width: 400px) {
-    .status-options {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-    .status-btn {
-        width: 100%;
-        flex-direction: row;
-        gap: 20px;
-    }
-    .status-btn .icon { margin-bottom: 0; }
+/* --- 14. UTILITIES & ANIMATIONS --- */
+.hidden { display: none !important; } /* Instant hide */
+
+@keyframes fadeIn { 
+    from { opacity: 0; transform: translateY(-10px); } /* Start invisible and above */
+    to { opacity: 1; transform: translateY(0); }       /* Fade in and slide down */
 }
