@@ -11,12 +11,37 @@
 <body>
     <div class="app-container">
         <!-- Main Application Header -->
-        <header>
-            <h1>MoveRest</h1>
-            <p class="subtitle">Track habits, embrace recovery</p>
+        <header class="header-top">
+            <div>
+                <h1>MoveRest</h1>
+                <p class="subtitle">Track habits, embrace recovery</p>
+            </div>
+            <!-- Quick Add Button -->
+            <button id="manual-add-btn" class="add-btn" aria-label="Add entry">+</button>
         </header>
 
         <main>
+            <!-- Quick Status Registration (Manual Workout Registration Requirement) -->
+            <section id="quick-status-section" class="card">
+                <h3>How is your day?</h3>
+                <div class="status-toggle-buttons">
+                    <button id="quick-green-btn" class="status-toggle green">Green Day</button>
+                    <button id="quick-red-btn" class="status-toggle red">Red Day</button>
+                </div>
+
+                <!-- Red Reasons: Shown only if 'Red Day' is selected -->
+                <div id="quick-red-reasons" class="reason-buttons hidden">
+                    <button class="reason-btn" data-reason="Pain">Pain</button>
+                    <button class="reason-btn" data-reason="Discomfort">Discomfort</button>
+                    <button class="reason-btn" data-reason="Low Energy">Low Energy</button>
+                </div>
+
+                <!-- Feedback Box: Recommendations based on status -->
+                <div id="feedback-display" class="feedback-box empty">
+                    <p id="feedback-text">Register your status to get feedback...</p>
+                </div>
+            </section>
+
             <!-- Calendar Section: Displays the monthly view and navigation -->
             <section id="calendar-section" class="card">
                 <div class="calendar-header">
@@ -34,64 +59,40 @@
                     <!-- Calendar cells will be injected here by app.js -->
                 </div>
             </section>
-
-            <!-- Main Action Button to open the registration flow -->
-            <div class="actions">
-                <button id="add-entry-btn" class="btn btn-primary">Register Today</button>
-            </div>
         </main>
 
-        <!-- Registration Modal: A multi-step form for user input -->
+        <!-- Registration Modal: Detailed entry form -->
         <div id="registration-modal" class="modal hidden">
             <div class="modal-content">
-                <!-- Close button for the modal -->
-                <span class="close-btn">&times;</span>
+                <span id="close-reg-modal" class="close-btn">&times;</span>
                 
-                <!-- Step 1: Status Selection (How are you?) -->
                 <div id="step-1" class="modal-step">
-                    <div class="modal-header">
-                        <h3 id="registration-date-display">Registration for Today</h3>
+                    <h3>New Entry</h3>
+                    <div class="modal-status-toggle">
+                        <button id="modal-status-green" class="status-mini green selected">Green Day</button>
+                        <button id="modal-status-red" class="status-mini red">Red Day</button>
                     </div>
-                    <h3>How are you today?</h3>
-                    <div class="status-options">
-                        <button class="status-btn status-green" data-status="green" aria-label="Green Day - Good Condition">
-                            <span class="icon">😊</span>
-                            <span class="label">Green Day</span>
-                        </button>
-                        <button class="status-btn status-red" data-status="red" aria-label="Red Day - Bad Condition">
-                            <span class="icon">😔</span>
-                            <span class="label">Red Day</span>
-                        </button>
-                        <button class="status-btn status-brown" data-status="brown" aria-label="Sick or Away">
-                            <span class="icon">🛌</span>
-                            <span class="label">Sick/Away</span>
-                        </button>
-                    </div>
-                </div>
 
-                <!-- Step 2: Contextual Details (Workout or Reason for Red day) -->
-                <div id="step-2" class="modal-step hidden">
-                    <h3 id="step-2-title">Details</h3>
                     <form id="entry-form">
-                        <!-- Red Reasons: Shown only if 'Red Day' is selected in Step 1 -->
-                        <div id="red-reasons" class="form-group hidden">
+                        <!-- Red Reasons in Modal -->
+                        <div id="modal-red-reasons" class="form-group hidden">
                             <label>Reason for Red Status:</label>
                             <div class="reason-options">
-                                <label><input type="radio" name="reason" value="Pain"> Pain</label>
-                                <label><input type="radio" name="reason" value="Discomfort"> Discomfort</label>
-                                <label><input type="radio" name="reason" value="Low Energy"> Low Energy</label>
+                                <label><input type="radio" name="modal-reason" value="Pain"> Pain</label>
+                                <label><input type="radio" name="modal-reason" value="Discomfort"> Discomfort</label>
+                                <label><input type="radio" name="modal-reason" value="Low Energy"> Low Energy</label>
                             </div>
                         </div>
 
-                        <!-- Workout Details: Shared between Green and Red days -->
+                        <!-- Workout Details -->
                         <div id="workout-details">
                             <div class="form-group">
                                 <label for="workout-type">Workout Type:</label>
-                                <input type="text" id="workout-type" placeholder="e.g. Running, Yoga, Strength">
+                                <input type="text" id="workout-type" placeholder="e.g. Running, Yoga">
                             </div>
                             <div class="form-group-row">
                                 <div class="form-group">
-                                    <label for="duration">Duration (minutes):</label>
+                                    <label for="duration">Duration (min):</label>
                                     <input type="number" id="duration" placeholder="30">
                                 </div>
                                 <div class="form-group">
@@ -105,28 +106,48 @@
                             </div>
                         </div>
 
-                        <!-- General Note/Comment: Available for all statuses -->
+                        <!-- General Note -->
                         <div class="form-group">
                             <label for="note">Comment / Note:</label>
-                            <textarea id="note" rows="3" placeholder="e.g. Sick today, Good recovery, or On vacation"></textarea>
+                            <textarea id="note" rows="3" placeholder="How did it go?"></textarea>
                         </div>
 
-                        <!-- Final Save Button -->
                         <button type="submit" class="btn btn-primary full-width">Save Entry</button>
                     </form>
                 </div>
+            </div>
+        </div>
 
-                <!-- Feedback Step: Shows a motivational message after saving -->
-                <div id="step-feedback" class="modal-step hidden">
-                    <div class="feedback-content">
-                        <div id="feedback-icon" class="large-icon">✨</div>
-                        <p id="feedback-message"></p>
-                        <button id="close-feedback-btn" class="btn btn-secondary">Close</button>
+        <!-- History Modal: View and delete saved data -->
+        <div id="view-data-modal" class="modal hidden">
+            <div class="modal-content">
+                <span id="close-view-modal" class="close-btn">&times;</span>
+                <h3 id="view-date-title">Details</h3>
+                
+                <div class="view-details-container">
+                    <div class="detail-item">
+                        <span class="detail-label">Status:</span>
+                        <span id="view-status-val" class="detail-val"></span>
+                    </div>
+                    <div id="view-reason-row" class="detail-item hidden">
+                        <span class="detail-label">Reason:</span>
+                        <span id="view-reason-val" class="detail-val"></span>
+                    </div>
+                    <div id="view-workout-row" class="detail-item hidden">
+                        <span class="detail-label">Workout:</span>
+                        <span id="view-workout-val" class="detail-val"></span>
+                    </div>
+                    <div id="view-note-row" class="form-group hidden">
+                        <label class="detail-label">Note:</label>
+                        <div id="view-note-val" class="detail-note-val"></div>
                     </div>
                 </div>
+
+                <button id="delete-entry-btn" class="btn btn-danger full-width">Delete Entry</button>
             </div>
         </div>
     </div>
+
     <!-- Load our core application logic script -->
     <script src="app.js"></script>
 </body>
