@@ -1,11 +1,7 @@
 /* --- 1. Theme colors --- */
-
-/*Firstly we defined our color palette and some global styles that we will be using throughout the app.
-This makes it easier to change the look of the app later by just adjusting these variables*/
+/* Defines the main colors and reusable design variables used throughout the app */
 
 /*Found colors on https://htmlcolorcodes.com/ */
-/*Used ChatGpt to help visualize the architecture of the CSS file and to make sure we have a solid structure to build on as we add more features to the app: https://chatgpt.com/share/6a0b3e8a-7d58-83eb-8d3b-30c26fde583c */
-
 
 :root {
     --primary-color: #39B1ED;    /* Blue color for + button and save button*/
@@ -16,14 +12,21 @@ This makes it easier to change the look of the app later by just adjusting these
     --text-color: #2E2D2D;       /* Dark grey for easy reading */
     --shadow: 0 4px 15px rgba(0,0,0,0.08); /* Subtle shadow, found on https://getcssscan.com/css-box-shadow-examples */
     --radius: 16px;                /* Rounded corners */
-    --danger-color: #ff7675;     /* Softer red for delete buttons */
+    --delete-color: #ff7675;     /* Softer red for delete buttons */
 }
+
+
+/*Used ChatGpt to help visualize the architecture of the CSS file and to make sure we have a solid structure to build on as we add more features to the app: https://chatgpt.com/share/6a0b3e8a-7d58-83eb-8d3b-30c26fde583c */
+
+
 
 /* --- 2.Basic Layout --- */
 
 /* The * means that we want to apply these styles to all elements on the page.
-First we set the box sizing to border-box so that it doesn't break our layout when adding padding.
-Then we remove deafult margin and padding that browsers add to elements, and set a clean font for the whole app*/
+
+
+/* Setting up the overall page layout, spacing, font, and centering */
+
 * { 
     box-sizing: border-box;     /* Making sure padding doesn't break width */
     margin: 0;                  /* Removing the default margin */
@@ -32,7 +35,9 @@ Then we remove deafult margin and padding that browsers add to elements, and set
 }
 
 /*We have used different guides as referenced in the comments to build the layout of the app, but the generak idea is to use flexbox to center the content and give it some breathing room with padding. We also set a max-with for the main container so that it doesn't get too wide on desktop screens, and to make sure the backround color covers the whole screen we set a min-height of 100vh (which means 100% of the viewport height)*/
+
 /*https://www.youtube.com/watch?v=yNyR_A73eTI - great video on building a centered card layout with flexbox and grid*/
+
 body { 
     background-color: var(--bg-color); /* Here we set the app background color */
     color: var(--text-color);           /* Here we set the default text color */
@@ -47,17 +52,17 @@ body {
     max-width: 450px;           /* But don't get too wide on desktop, without this the container would stretch to the full width */
 }
 
-/* --- 3. HEADER & ADD BUTTON --- */        /*Saving this website about button animations for later: https://dev.to/webdeasy/top-20-css-buttons-animations-f41 */
+/* --- 3. HEADER & ADD BUTTON --- */                                                              /*Saving this website about button animations for later: https://dev.to/webdeasy/top-20-css-buttons-animations-f41 */
 .header-top { 
-    display: flex;              /* Putting the title and button on same line */
-    justify-content: space-between; /* Pushing the  title to the left and button to the right */
-    align-items: center;        /* aligning them in the center */
-    margin-bottom: 5px;         /* Putting some space below the header */
+    display: flex;              
+    justify-content: space-between;  /* Pushing the  title to the left and button to the right */
+    align-items: center;             /* aligning them in the center */
+    margin-bottom: 5px;              /* Putting some space below the header */
 }
 
 .add-btn { 
     background: var(--primary-color); /* We want the add button to have a blue background */
-    color: white;                   /* White plus symbol */
+    color: #ffffff;                   /* White plus symbol */
     border: none;                     /* Removing default border */
     width: 44px;                      
     height: 44px;                     
@@ -67,8 +72,8 @@ body {
     display: flex;                    /* Centering the plus symbol inside */
     align-items: center;              /* vertically centering */
     justify-content: center;          /* Horizontal centering */
-    box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3); /* Blue shadow */
-    transition: transform 0.2s;       /* the button gets a smooth transition when hovered */
+    box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3); /* Blue shadow to match button */
+    transition: transform 0.2s;       /* the button gets a smooth transition when hovering over it */
 }
 
 .add-btn:active { 
@@ -84,18 +89,18 @@ body {
 /* --- 4. CARDS --- */
 .card { 
     background: var(--card-bg); /* White background */
-    border-radius: var(--radius); /* Rounded corners as stadet in root */
+    border-radius: var(--radius); 
     padding: 25px;              /* Spacing inside the card */
-    box-shadow: var(--shadow);  /* shadow for depth */
+    box-shadow: var(--shadow);  
     margin-bottom: 25px;        /* space between cards */
 }
 
 /* --- 5. QUICK STATUS BUTTONS --- */
 .status-buttons { 
-    display: grid;              /* Create a grid for buttons */
+    display: grid;                  /* Creating a grid for buttons */
     grid-template-columns: 1fr 1fr; /* Making two equal columns */
-    gap: 20px;                  /* Space between the two buttons */
-    margin: 20px 0;             /* Space above and below button group */
+    gap: 20px;                      /* Space between the two buttons */
+    margin: 20px 0;                 /* Space above and below button group */
 }
 
 .status-button { 
@@ -103,10 +108,10 @@ body {
     border: none;               
     border-radius: 12px;        
     font-weight: bold;          /* got some tips from https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/font-weight */
-    cursor: pointer;            /* Show pointer hover */
-    font-size: 1.1rem;          /* Easy to read font size */
-    transition: transform 0.2s, filter 0.2s; /* shrinks over 0.2s and brightness */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* adding a subtle shadow to make the buttons stand out more */
+    cursor: pointer;            
+    font-size: 1.1rem;          
+    transition: transform 0.2s, filter 0.2s;   /* shrinks over 0.2s and brightness */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);  /* adding a subtle shadow to make the buttons stand out more */
 }
 
 .status-button:active { 
@@ -119,24 +124,24 @@ body {
 
 /* --- 6. REASON BUTTONS --- */
 .reason-buttons { 
-    display: flex;              /* Sets the buttons in a row */
-    justify-content: space-between; /* Spreads them out */
-    gap: 12px;                  /* Small gap between buttons */
-    margin-bottom: 20px;        /* Space between reason buttons and feedback box */
-    animation: fadeIn 0.3s ease; /* got help with this animation from ChatGpt: https://chatgpt.com/share/6a0cb189-10e8-83eb-a21b-8b4fdab62c71 */
+    display: flex;                   /* Sets the buttons in a row */
+    justify-content: space-between;  /* Spreads them out */
+    gap: 12px;                       /* Small gap between buttons */
+    margin-bottom: 20px;             /* Space between reason buttons and feedback box */
+    animation: fadeIn 0.3s ease;     /* got help with this animation from ChatGpt: https://chatgpt.com/share/6a0cb189-10e8-83eb-a21b-8b4fdab62c71 */
 }
 
 .reason-button { 
-    flex: 1;                    /* All buttons has the same width https://www.w3schools.com/csSref/css3_pr_flex.php*/
+    flex: 1;                           /* All buttons has the same width https://www.w3schools.com/csSref/css3_pr_flex.php*/
     padding: 10px;              
     border: 1.5px solid #dfe6e9; 
     border-radius: 8px;         
     background: white;         
     cursor: pointer;            
     font-size: 0.85rem;         
-    font-weight: 600;           /* Semi-bold text */
+    font-weight: 600;                 /* Semi-bold text */
     color: #636e72;             
-    transition: all 0.2s;       /*All properties transitions smoothly */
+    transition: all 0.2s;             /*All properties transitions smoothly */
 }
 
 .reason-button:hover { 
@@ -170,60 +175,63 @@ body {
     font-weight: 500;           
 }
 
-/* --- 8. CALENDAR STYLES --- */
+/* --- 8. CALENDAR STYLES--- */
+
+/*Got tips on building the calendar layout fron https://dev.to/wizdomtek/creating-a-dynamic-calendar-using-html-css-and-javascript-29m  and https://www.youtube.com/watch?v=GeXfhYmXWGU*/
+
 .calendar-header { 
-    display: flex;              /* Row layout */
-    justify-content: space-between; /* Push arrows to edges */
-    align-items: center;        /* Align arrows with text */
-    margin-bottom: 20px;        /* Space before days */
+    display: flex;              
+    justify-content: space-between; /* Pushing arrows to edges */
+    align-items: center;        /* Aligning arrows with the month text */
+    margin-bottom: 20px;        /* Space before days header */
 }
 
 .calendar-header h2 { 
-    font-size: 1.2rem;          /* Clear month title */
-    color: var(--text-color);   /* Dark text */
+    font-size: 1.2rem;          
+    color: var(--text-color);   
 }
 
 .calendar-header button { 
     background: #f0f2f5;        /* Light background for arrow buttons */
-    border: none;               /* No border */
-    cursor: pointer;            /* Pointer hover */
-    font-size: 1.2rem;          /* Large arrows */
-    color: var(--primary-color);/* Blue arrows */
-    width: 36px;                /* Square width */
-    height: 36px;               /* Square height */
-    border-radius: 50%;         /* Circular buttons */
-    display: flex;              /* Center the icon */
-    align-items: center;        /* Vertical center */
-    justify-content: center;    /* Horizontal center */
+    border: none;               
+    cursor: pointer;            
+    font-size: 1.2rem;          
+    color: var(--primary-color);   /* Blue arrows */
+    width: 36px;                 
+    height: 36px;                
+    border-radius: 50%;          
+    display: flex;              
+    align-items: center;        
+    justify-content: center;    
 }
 
 .calendar-days-header { 
-    display: grid;              /* 7-column layout */
+    display: grid;              
     grid-template-columns: repeat(7, 1fr); /* 7 equal columns */
-    text-align: center;         /* Center the labels */
-    font-size: 0.8rem;          /* Smaller text */
-    font-weight: bold;          /* Bold days (M, T, W...) */
-    color: #b2bec3;             /* Light grey labels */
-    margin-bottom: 12px;        /* Space before numbers */
+    text-align: center;         
+    font-size: 0.8rem;          
+    font-weight: bold;          
+    color: #b2bec3;            
+    margin-bottom: 12px;        /* Making space before numbers */
 }
 
 .calendar-grid { 
-    display: grid;              /* Grid for day boxes */
+    display: grid;              /* Grid for days */
     grid-template-columns: repeat(7, 1fr); /* 7 columns */
     gap: 8px;                   /* Gap between day boxes */
 }
 
 .calendar-day { 
-    aspect-ratio: 1;            /* Ensure squares */
-    display: flex;              /* Center the number */
-    flex-direction: column;     /* Stack number and dot */
-    align-items: center;        /* Horizontal center */
-    justify-content: center;    /* Vertical center */
-    border-radius: 10px;        /* Rounded squares */
-    font-size: 0.9rem;          /* Easy to read numbers */
-    cursor: pointer;            /* Pointer hover */
-    position: relative;         /* Position for absolute indicator */
-    background: #fff;           /* White background */
+    aspect-ratio: 1;            /* Makes a perfect squar */
+    display: flex;              
+    flex-direction: column;     /* Stacks the number over the dot */
+    align-items: center;       
+    justify-content: center;    
+    border-radius: 10px;        
+    font-size: 0.9rem;          
+    cursor: pointer;            
+    position: relative;         
+    background: #fff;          
     transition: background 0.2s;/* Hover effect transition */
 }
 
@@ -232,15 +240,15 @@ body {
 }
 
 .calendar-day.today { 
-    font-weight: bold;          /* Bold today's number */
-    color: var(--primary-color);/* Blue text for today */
+    font-weight: bold;          /* Bold font for today's number */
+    color: var(--primary-color);
     background: #eef7ff;        /* Very light blue background */
 }
 
 .day-indicator { 
     width: 8px;                 /* Tiny dot size */
-    height: 8px;                /* Tiny dot size */
-    border-radius: 50%;         /* Circle shape */
+    height: 8px;                
+    border-radius: 50%;         
     position: absolute;         /* Floating position */
     bottom: 6px;                /* Near the bottom edge */
 }
@@ -257,8 +265,8 @@ body {
     height: 100%;               /* Cover screen */
     background: rgba(0,0,0,0.6);/* Dark overlay */
     display: flex;              /* Center the window */
-    align-items: center;        /* Center vertically */
-    justify-content: center;    /* Center horizontally */
+    align-items: center;       
+    justify-content: center;    
     z-index: 1000;              /* Always on top */
     padding: 20px;              /* Room for mobile browsers */
     backdrop-filter: blur(4px); /* Blur effect behind popup */
