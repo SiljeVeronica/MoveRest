@@ -321,32 +321,32 @@ body {
 }
 
 /* --- 11. MODAL STATUS SELECTION --- */
+
 .modal-status-toggle { 
-    display: grid;              /* Grid layout */
-    grid-template-columns: 1fr 1fr; /* Two columns */
-    gap: 10px;                  /* Small gap */
-    margin-bottom: 15px;        /* Space before form */
+    display: grid;              
+    grid-template-columns: 1fr 1fr; 
+    gap: 10px;                  
+    margin-bottom: 15px;       
 }
 
 .status-mini { 
-    padding: 10px;              /* Compact size */
-    border: 2px solid #dfe6e9;  /* Light border */
-    border-radius: 8px;         /* Rounded corners */
-    background: white;          /* Default background */
-    cursor: pointer;            /* Pointer finger */
-    font-weight: 600;           /* Semi-bold */
-    font-size: 0.85rem;         /* Small font */
-    transition: all 0.2s;       /* Smooth toggle */
+    padding: 10px;              
+    border: 2px solid #dfe6e9;  
+    border-radius: 8px;         
+    background: white;          
+    cursor: pointer;            
+    font-weight: 600;           
+    transition: all 0.2s;       
     color: #636e72;             /* Default grey text */
 }
 
 .status-mini.green.selected { 
-    background-color: var(--color-green); /* Green when active */
+    background-color: var(--color-green); 
     color: white; border-color: var(--color-green); 
 }
 
 .status-mini.red.selected { 
-    background-color: var(--color-red);   /* Red when active */
+    background-color: var(--color-red);   
     color: white; border-color: var(--color-red); 
 }
 
