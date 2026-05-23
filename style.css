@@ -240,7 +240,7 @@ body {
 }
 
 .calendar-day.today { 
-    font-weight: bold;          /* Bold font for today's number */
+    font-weight: bold;            /* Bold font for today's number */
     color: var(--primary-color);
     background: #eef7ff;        /* Very light blue background */
 }
@@ -256,38 +256,38 @@ body {
 .indicator-green { background: var(--color-green); } /* Green dot */
 .indicator-red { background: var(--color-red); }     /* Red dot */
 
-/* --- 9. MODAL & POPUP STYLES --- */ /*https://www.youtube.com/watch?v=RO40Opyizeg&t=96s*/
+/* --- 9. MODAL & POPUP STYLES --- */ /*https://www.youtube.com/watch?v=RO40Opyizeg&t=96s and https://www.youtube.com/watch?v=YKPkDFs5DGY&list=PLVGpQnv1Jm4yxKcPhC0p2pv0k-eulDxhy*/ 
 .modal { 
     position: fixed;            /* Fixed on screen */
     top: 0;                     /* Top edge */
     left: 0;                    /* Left edge */
-    width: 100%;                /* Cover screen */
-    height: 100%;               /* Cover screen */
+    width: 100%;                
+    height: 100%;               
     background: rgba(0,0,0,0.6);/* Dark overlay */
-    display: flex;              /* Center the window */
+    display: flex;                /* Using flexbox to center the content */
     align-items: center;       
     justify-content: center;    
     z-index: 1000;              /* Always on top */
     padding: 20px;              /* Room for mobile browsers */
-    backdrop-filter: blur(4px); /* Blur effect behind popup */
+    backdrop-filter: blur(4px); /* Blurring behind popup */
 }
 
 .modal-content { 
-    background: white;          /* Window background */
-    width: 100%;                /* Full width of container */
-    max-width: 380px;           /* But not too wide */
-    padding: 30px;              /* Interior breathing room */
-    border-radius: var(--radius);/* Rounded corners */
-    position: relative;         /* For absolute close button */
+    background: white;         /* Window background */
+    width: 100%;                 
+    max-width: 380px;            
+    padding: 30px;               
+    border-radius: var(--radius);
+    position: relative;          /* For absolute close button */
     box-shadow: 0 20px 40px rgba(0,0,0,0.2); /* Deep shadow */
 }
 
 .close-btn { 
     position: absolute;         /* Float inside content */
-    top: 15px;                  /* From top */
-    right: 20px;                /* From right */
-    cursor: pointer;            /* Hover pointer */
-    font-size: 1.5rem;          /* Large X */
+    top: 15px;                  
+    right: 20px;                
+    cursor: pointer;            
+    font-size: 1.5rem;            /* Large X */
     color: #b2bec3;             /* Light grey X */
 }
 
