@@ -32,11 +32,9 @@
     margin: 0;                  /* Removing the default margin */
     padding: 0;                 /* Removing the default padding */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Clean font, finding some tips here: https://css-tricks.com/snippets/css/font-stacks/ and https://www.w3schools.com/cssref/css_websafe_fonts.php and the youtube video below*/
-}
+}/
 
-/*We have used different guides as referenced in the comments to build the layout of the app, but the generak idea is to use flexbox to center the content and give it some breathing room with padding. We also set a max-with for the main container so that it doesn't get too wide on desktop screens, and to make sure the backround color covers the whole screen we set a min-height of 100vh (which means 100% of the viewport height)*/
-
-/*https://www.youtube.com/watch?v=yNyR_A73eTI - great video on building a centered card layout with flexbox and grid*/
+/*https://www.youtube.com/watch?v=yNyR_A73eTI - great video on building a centered card layout with flexbox and grid getting some inspiration */
 
 body { 
     background-color: var(--bg-color); /* Here we set the app background color */
@@ -353,73 +351,72 @@ body {
 /* --- 12. VIEW DETAILS (History Modal) --- */
 .view-details-container { 
     margin: 20px 0;             /* Vertical spacing */
-    display: flex;              /* Column layout */
-    flex-direction: column;     /* Stack detail items */
-    gap: 15px;                  /* Space between items */
+    display: flex;             
+    flex-direction: column;     /* Stacking the items */
+    gap: 15px;                  
 }
 
 .detail-item { 
-    display: flex;              /* Label and value in a row */
-    justify-content: space-between; /* Space between them */
-    align-items: flex-start;    /* Top align */
-    padding-bottom: 10px;       /* Room below */
+    display: flex;              
+    justify-content: space-between;
+    align-items: flex-start;             /*aligning "note:" and text at the top*/
+    padding-bottom: 10px;       
     border-bottom: 1px solid #f0f2f5; /* Separator line */
 }
 
-.detail-label { font-weight: bold; color: #636e72; font-size: 0.9rem; } /* Grey labels */
-.detail-val { color: var(--text-color); font-weight: 600; text-align: right; } /* Dark values */
+.detail-label { font-weight: bold; color: #636e72; font-size: 0.9rem; } 
+.detail-val { color: var(--text-color); font-weight: 600; text-align: right; } 
 
 .detail-note-val { 
-    color: var(--text-color);   /* Dark text */
-    font-style: italic;         /* Italic for notes */
-    background: #f8f9fa;        /* Light box for note */
-    padding: 10px;              /* Room inside note */
-    border-radius: 8px;         /* Rounded corners */
-    width: 100%;                /* Take full width */
-    margin-top: 5px;            /* Space above */
-    font-size: 0.9rem;          /* Readable size */
+    color: var(--text-color);     
+    font-style: italic;           
+    background: #f8f9fa;        
+    padding: 10px;               
+    border-radius: 8px;        
+    width: 100%;                 
+    margin-top: 5px;           
+    font-size: 0.9rem;         
 }
 
 /* --- 13. BUTTON VARIANTS --- */
 
 .btn-primary { 
-    background: var(--primary-color); /* Main blue */
-    color: white;                     /* White text */
-    border: none;                     /* No border */
-    padding: 14px;                    /* Big clickable area */
-    border-radius: 8px;               /* Rounded corners */
-    cursor: pointer;                  /* Pointer hover */
-    font-weight: bold;                /* Bold text */
-    font-size: 1rem;                  /* Standard size */
+    background: var(--primary-color);
+    color: white;                     
+    border: none;                     
+    padding: 14px;                    
+    border-radius: 8px;               
+    cursor: pointer;                  
+    font-weight: bold;                
+    font-size: 1rem;                  
     transition: background 0.2s;      /* Smooth color change */
-    margin-top: 10px;                 /* Space above */
+    margin-top: 10px;                 
 }
 
-.btn-primary:hover { background: #357abd; } /* Darker blue on hover */
+.btn-primary:hover { background: #357abd; } 
 
-.btn-danger { 
-    background: white;                /* White background */
-    color: var(--danger-color);       /* Red text */
-    border: 2px solid var(--danger-color); /* Red outline */
-    padding: 12px;                    /* Interior room */
-    border-radius: 8px;               /* Rounded corners */
-    cursor: pointer;                  /* Pointer hover */
-    font-weight: bold;                /* Bold text */
-    margin-top: 20px;                 /* Space above */
-    transition: all 0.2s;             /* Smooth interaction */
+.btn-delete { 
+    background: white;               
+    color: var(--danger-color);       
+    border: 2px solid var(--delete-color);
+    padding: 12px;                    
+    border-radius: 8px;               
+    cursor: pointer;                  
+    font-weight: bold;                
+    margin-top: 20px;                 
+    transition: all 0.2s;             
 }
 
-.btn-danger:hover { 
-    background: var(--danger-color);  /* Solid red on hover */
-    color: white;                     /* White text on hover */
+.btn-delete:hover { 
+    background: var(--delete-color);  
+    color: white;                     
 }
 
-.full-width { width: 100%; }         /* Utility for full width buttons */
+.full-width { width: 100%; }         /* class to make any button take full width of its container */
 
 /* --- 14. UTILITIES & ANIMATIONS --- */
-.hidden { display: none !important; } /* Instant hide */
+.hidden { display: none !important; } /* https://www.youtube.com/watch?v=eCIOAVCsuys, !important forces the element to be hidden */
 
 @keyframes fadeIn { 
     from { opacity: 0; transform: translateY(-10px); } /* Start invisible and above */
-    to { opacity: 1; transform: translateY(0); }       /* Fade in and slide down */
-}
+    to { opacity: 1; transform: translateY(0); }       /* Fade in and slide down, https://stackoverflow.com/questions/63987062/how-can-i-make-a-transition-effect-to-opacity-0-with-ending-in-display-none*/
