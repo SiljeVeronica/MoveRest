@@ -91,7 +91,7 @@ document.getElementById('quick-red-btn').onclick = () => { // Red button click:
     setFeedback("Please select a reason below...", true); // Ask for reason.
 }; // End red click.
 
-document.querySelectorAll('.reason-btn').forEach(btn => { // For each reason button:
+document.querySelectorAll('.reason-button').forEach(btn => { // For each reason button:
     btn.onclick = () => { // When clicked:
         const why = btn.dataset.reason; // Get reason name.
         saveEntry('red', { reason: why }); // Save red with reason.
@@ -143,7 +143,7 @@ document.getElementById('entry-form').onsubmit = (event) => { // Form save click
 function showHistoryPopup(data, date) { // Function to show history window.
     document.getElementById('view-date-title').textContent = `Details for ${date}`; // Set date title.
     const statusText = document.getElementById('view-status-val'); // Status label.
-    statusText.textContent = data.status === 'green' ? 'Green Day' : 'Red Day'; // Write status.
+    statusText.textContent = data.status === 'green' ? '😊 Green Day' : '😔 Red Day'; // Write status.
     statusText.style.color = data.status === 'green' ? 'var(--color-green)' : 'var(--color-red)'; // Set color.
 
     const rRow = document.getElementById('view-reason-row'); // Reason row.
