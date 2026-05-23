@@ -292,29 +292,32 @@ body {
 }
 
 /* --- 10. FORM STYLES --- */
+
+/*Tips from this video on styling forms: https://www.youtube.com/watch?v=nuDpLN2dazU, https://www.youtube.com/watch?v=qelcFC6B_Nw  */
+
 .form-group { 
     margin-bottom: 20px;        /* Space between fields */
 }
 
 .form-group label { 
     display: block;             /* Label on own line */
-    font-size: 0.9rem;          /* Readable size */
-    margin-bottom: 8px;         /* Space before input */
-    font-weight: bold;          /* Bold labels */
+    font-size: 0.9rem;          
+    margin-bottom: 8px;         
+    font-weight: bold;          
 }
 
 .form-group input, .form-group select, .form-group textarea { 
-    width: 100%;                /* Full width inputs */
-    padding: 12px;              /* Space for typing */
+    width: 100%;                
+    padding: 12px;              
     border: 1px solid #ddd;     /* Simple border */
-    border-radius: 8px;         /* Rounded inputs */
-    font-size: 1rem;            /* Easy to read text */
+    border-radius: 8px;         
+    font-size: 1rem;            
 }
 
 .form-group-row { 
-    display: grid;              /* Multi-column row */
-    grid-template-columns: 1fr 1fr; /* Two columns */
-    gap: 15px;                  /* Gap between row fields */
+    display: grid;              
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px;                  
 }
 
 /* --- 11. MODAL STATUS SELECTION --- */
