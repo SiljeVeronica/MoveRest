@@ -4,20 +4,21 @@ let viewingDate = new Date(); // Track which month is currently showing on the c
 let selectedDateKey = ""; // Remember which day was clicked for history view.
 
 // 2. FINDING ELEMENTS ON THE PAGE (Connecting JS to HTML)
-const calendarGrid = document.getElementById('calendar-grid'); // Find the calendar grid area.
-const monthLabel = document.getElementById('current-month-year'); // Find the Month/Year header.
-const feedbackBox = document.getElementById('feedback-display'); // Find the feedback container.
-const feedbackText = document.getElementById('feedback-text'); // Find the text inside the feedback box.
-const redReasonSection = document.getElementById('quick-red-reasons'); // Find the quick-red reasons section.
-const regModal = document.getElementById('registration-modal'); // Find the registration popup.
-const viewModal = document.getElementById('view-data-modal'); // Find the history popup.
+const calendarGrid = document.getElementById('calendar-grid'); 
+const monthLabel = document.getElementById('current-month-year'); 
+const feedbackBox = document.getElementById('feedback-display'); 
+const feedbackText = document.getElementById('feedback-text'); 
+const redReasonSection = document.getElementById('quick-red-reasons'); 
+const regModal = document.getElementById('registration-modal'); 
+const viewModal = document.getElementById('view-data-modal'); 
 
 // 3. CALENDAR LOGIC - here we build the calendar and fill in the data from memory
+// Using this for inspiration: https://dev.to/wizdomtek/creating-a-dynamic-calendar-using-html-css-and-javascript-29m
 function drawCalendar() { // Function to draw the calendar month.
     calendarGrid.innerHTML = ''; // Wipe the calendar clean before drawing.
-    const year = viewingDate.getFullYear(); // Get year from current view date.
-    const month = viewingDate.getMonth(); // Get month from current view date.
-    monthLabel.textContent = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(viewingDate); // Set header text.
+    const year = viewingDate.getFullYear(); // Getting year from current view date.
+    const month = viewingDate.getMonth(); // Getting month from current view date.
+    monthLabel.textContent = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(viewingDate); 
 
     const firstDayIndex = new Date(year, month, 1).getDay(); // Find first weekday of the month.
     const totalDays = new Date(year, month + 1, 0).getDate(); // Find total days in the month.
@@ -57,12 +58,12 @@ function drawCalendar() { // Function to draw the calendar month.
 
 // 4. FEEDBACK & SAVING (The logic)
 function getAdvice(status, reason) { // Function to pick advice text.
-    if (status === 'green') return "Great job! Keep the momentum going. Your body thanks you! 🔥"; // Green advice.
-    if (reason === 'Pain') return "Recommendation: Please rest today to recover. Your health comes first! 🛡️"; // Pain advice.
-    if (reason === 'Low Energy') return "Recommendation: A lighter activity or a walk might help boost your mood. 🚶‍♂️"; // Energy advice.
-    if (reason === 'Discomfort') return "Recommendation: Try some gentle stretching or mobility work today. 🧘"; // Discomfort advice.
-    return "Taking it easy is a smart move. Rest up! ✨"; // Default advice.
-} // End getAdvice function.
+    if (status === 'green') return "Great job! Keep the momentum going. Your body thanks you! 🔥"; 
+    if (reason === 'Pain') return "Recommendation: Please rest today to recover. Your health comes first! 🛡️"; 
+    if (reason === 'Low Energy') return "Recommendation: A lighter activity or a walk might help boost your mood. 🚶‍♂️"; 
+    if (reason === 'Discomfort') return "Recommendation:  Consider lighter activity today, like walking, cycling, or gentle stretching instead of intense exercise. 🧘"; 
+      return "Taking it easy is a smart move. Rest up! ✨"; 
+} 
 
 function saveEntry(status, details = {}) { // Function to save data.
     const today = new Date(); // Get current date.
@@ -142,7 +143,7 @@ document.getElementById('entry-form').onsubmit = (event) => { // Form save click
 function showHistoryPopup(data, date) { // Function to show history window.
     document.getElementById('view-date-title').textContent = `Details for ${date}`; // Set date title.
     const statusText = document.getElementById('view-status-val'); // Status label.
-    statusText.textContent = data.status === 'green' ? '😊 Green Day' : '😔 Red Day'; // Write status.
+    statusText.textContent = data.status === 'green' ? 'Green Day' : 'Red Day'; // Write status.
     statusText.style.color = data.status === 'green' ? 'var(--color-green)' : 'var(--color-red)'; // Set color.
 
     const rRow = document.getElementById('view-reason-row'); // Reason row.
