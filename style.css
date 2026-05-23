@@ -32,7 +32,7 @@
     margin: 0;                  /* Removing the default margin */
     padding: 0;                 /* Removing the default padding */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Clean font, finding some tips here: https://css-tricks.com/snippets/css/font-stacks/ and https://www.w3schools.com/cssref/css_websafe_fonts.php and the youtube video below*/
-}/
+}
 
 /*https://www.youtube.com/watch?v=yNyR_A73eTI - great video on building a centered card layout with flexbox and grid getting some inspiration */
 
@@ -419,4 +419,6 @@ body {
 
 @keyframes fadeIn { 
     from { opacity: 0; transform: translateY(-10px); } /* Start invisible and above */
-    to { opacity: 1; transform: translateY(0); }       /* Fade in and slide down, https://stackoverflow.com/questions/63987062/how-can-i-make-a-transition-effect-to-opacity-0-with-ending-in-display-none*/
+    to { opacity: 1; transform: translateY(0); }       /* Fade in and slide down, https://stackoverflow.com/questions/63987062/how-can-i-make-a-transition-effect-to-opacity-0-with-ending-in-display-none */
+}
+    
