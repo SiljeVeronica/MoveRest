@@ -5,8 +5,8 @@ It supports healthier habits by showing how your energy, pain, and recovery can 
 
 ## Features
 
-- **Dynamic Calendar**: View your progress at a glance with color-coded indicators.
-- **Smart Registration**: Quick and intuitive logging for Green, Red, and Sick/Away days.
+- **Dynamic Calendar**: View your progress with color-coded indicators.
+- **Smart Registration**: Quick and intuitive logging for Green and Red days.
 - **Adaptive Feedback**: Get motivational quotes or recovery advice based on your daily status.
 - **Privacy First**: All data is stored locally in your browser (no backend required).
 - **Responsive Design**: Works perfectly on both desktop and mobile screens.
