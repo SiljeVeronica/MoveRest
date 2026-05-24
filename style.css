@@ -120,6 +120,28 @@ body {
 .status-button.green { background-color: var(--color-green); color: white; } 
 .status-button.red { background-color: var(--color-red); color: white; }   
 
+.status-button, .status-mini {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.face-icon {
+    width: 32px;
+    height: 32px;
+    stroke: currentColor;
+    stroke-width: 3.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.status-mini .face-icon {
+    width: 24px;
+    height: 24px;
+    stroke-width: 3;
+}
+
 /* --- 6. REASON BUTTONS --- */
 .reason-buttons { 
     display: flex;                   /* Sets the buttons in a row */

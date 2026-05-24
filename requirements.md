@@ -66,7 +66,7 @@ See whether a day is marked green or red
 
 Green indicators for positive days
 Red indicators for difficult days
-Daily Notes and Comments
+Daily Notes and Comments 
 
 The user must be able to save comments for a selected day.
 

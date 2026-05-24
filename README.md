@@ -26,4 +26,4 @@ Simply open the index.html in your web browser (Chrome, Firefox, Safari, Edge).
 
 - **Green Day**: Feeling good, workout registered!
 - **Red Day**: Feeling off (Pain, Low Energy, Discomfort).
-- **Brown Day**: Sick or Away (Rest and recovery focus).
+

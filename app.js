@@ -62,7 +62,7 @@ function getAdvice(status, reason) { // Function to pick advice text.
     if (reason === 'Pain') return "Recommendation: Please rest today to recover. Your health comes first! 🛡️"; 
     if (reason === 'Low Energy') return "Recommendation: A lighter activity or a walk might help boost your mood. 🚶‍♂️"; 
     if (reason === 'Discomfort') return "Recommendation:  Consider lighter activity today, like walking, cycling, or gentle stretching instead of intense exercise. 🧘"; 
-      return "Taking it easy is a smart move. Rest up! ✨"; 
+  return "Taking it easy is a smart move. Rest up! ✨"; 
 } 
 
 function saveEntry(status, details = {}) { // Function to save data.
@@ -96,6 +96,7 @@ document.querySelectorAll('.reason-button').forEach(btn => { // For each reason 
         const why = btn.dataset.reason; // Get reason name.
         saveEntry('red', { reason: why }); // Save red with reason.
         setFeedback(getAdvice('red', why)); // Show specific advice.
+        redReasonSection.classList.add('hidden'); // Hide reasons after choice.
     }; // End click.
 }); // End reason loop.
 
@@ -143,7 +144,7 @@ document.getElementById('entry-form').onsubmit = (event) => { // Form save click
 function showHistoryPopup(data, date) { // Function to show history window.
     document.getElementById('view-date-title').textContent = `Details for ${date}`; // Set date title.
     const statusText = document.getElementById('view-status-val'); // Status label.
-    statusText.textContent = data.status === 'green' ? '😊 Green Day' : '😔 Red Day'; // Write status.
+    statusText.textContent = data.status === 'green' ? 'Green Day' : 'Red Day'; // Write status.
     statusText.style.color = data.status === 'green' ? 'var(--color-green)' : 'var(--color-red)'; // Set color.
 
     const rRow = document.getElementById('view-reason-row'); // Reason row.
