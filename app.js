@@ -19,6 +19,7 @@ function drawCalendar() { // Function to draw the calendar month.
     const year = viewingDate.getFullYear(); // Getting year from current view date.
     const month = viewingDate.getMonth(); // Getting month from current view date.
     monthLabel.textContent = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(viewingDate); 
+    
 
     const firstDayIndex = new Date(year, month, 1).getDay(); // Find first weekday of the month.
     const totalDays = new Date(year, month + 1, 0).getDate(); // Find total days in the month.
