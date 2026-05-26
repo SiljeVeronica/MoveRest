@@ -13,7 +13,7 @@ It supports healthier habits by showing how your energy, pain, and recovery can 
 
 ## Getting Started
 
-Simply open the index.html in your web browser (Chrome, Firefox, Safari, Edge).
+Simply open the index.html in your web browser (Chrome, Firefox, Safari, Edge)
 
 ## Built With
 

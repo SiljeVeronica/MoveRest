@@ -1,6 +1,6 @@
 // 1. DATA STORAGE (Memory)
 let myLogs = JSON.parse(localStorage.getItem('moverest_logs')) || {}; // Load saved logs from browser storage.
-let viewingDate = new Date(); // Track which month is currently showing on the calendar.
+let viewingDate = new Date(); // Tracking which month is currently showing on the calendar.
 let selectedDateKey = ""; // Remember which day was clicked for history view.
 
 // 2. FINDING ELEMENTS ON THE PAGE (Connecting JS to HTML)
@@ -18,7 +18,7 @@ function drawCalendar() { // Function to draw the calendar month.
     calendarGrid.innerHTML = ''; // Wipe the calendar clean before drawing.
     const year = viewingDate.getFullYear(); // Getting year from current view date.
     const month = viewingDate.getMonth(); // Getting month from current view date.
-    monthLabel.textContent = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(viewingDate); 
+    monthLabel.textContent = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(viewingDate); // Set month-year label at top
     
 
     const firstDayIndex = new Date(year, month, 1).getDay(); // Find first weekday of the month.
@@ -63,7 +63,6 @@ function getAdvice(status, reason) { // Function to pick advice text.
     if (reason === 'Pain') return "Recommendation: Please rest today to recover. Your health comes first! 🛡️"; 
     if (reason === 'Low Energy') return "Recommendation: A lighter activity or a walk might help boost your mood. 🚶‍♂️"; 
     if (reason === 'Discomfort') return "Recommendation:  Consider lighter activity today, like walking, cycling, or gentle stretching instead of intense exercise. 🧘"; 
-  return "Taking it easy is a smart move. Rest up! ✨"; 
 } 
 
 function saveEntry(status, details = {}) { // Function to save data.
