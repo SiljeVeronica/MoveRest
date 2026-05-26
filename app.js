@@ -71,25 +71,25 @@ function saveEntry(status, details = {}) { // Function to save data.
     myLogs[dateKey] = { status, ...details, time: new Date().toISOString() }; // Add data to memory.
     localStorage.setItem('moverest_logs', JSON.stringify(myLogs)); // Save memory permanently.
     drawCalendar(); // Update calendar dots.
-} // End saveEntry function.
+} 
 
 function setFeedback(message, isWaiting = false) { // Function to update main screen text.
     feedbackBox.classList.remove('empty'); // Make feedback box active.
     if (isWaiting) feedbackBox.classList.add('empty'); // Keep it light if waiting.
     feedbackText.textContent = message; // Set message text.
-} // End setFeedback function.
+} 
 
 // 5. BUTTON CLICKS (User Actions)
 document.getElementById('quick-green-btn').onclick = () => { // Green button click:
     redReasonSection.classList.add('hidden'); // Hide reasons.
     saveEntry('green'); // Save green status.
     setFeedback(getAdvice('green')); // Show advice.
-}; // End green click.
+}; 
 
 document.getElementById('quick-red-btn').onclick = () => { // Red button click:
     redReasonSection.classList.remove('hidden'); // Show reasons.
     setFeedback("Please select a reason below...", true); // Ask for reason.
-}; // End red click.
+}; 
 
 document.querySelectorAll('.reason-button').forEach(btn => { // For each reason button:
     btn.onclick = () => { // When clicked:
@@ -115,14 +115,14 @@ miniGreen.onclick = () => { // Mini green click:
     miniGreen.classList.add('selected'); // Highlight button.
     miniRed.classList.remove('selected'); // Un-highlight other.
     modalReasons.classList.add('hidden'); // Hide reasons.
-}; // End mini green click.
+}; 
 
 miniRed.onclick = () => { // Mini red click:
     currentModalStatus = 'red'; // Set status.
     miniRed.classList.add('selected'); // Highlight button.
     miniGreen.classList.remove('selected'); // Un-highlight other.
     modalReasons.classList.remove('hidden'); // Show reasons.
-}; // End mini red click.
+}; 
 
 document.getElementById('entry-form').onsubmit = (event) => { // Form save clicked:
     event.preventDefault(); // Don't refresh page.
