@@ -16,19 +16,19 @@ const viewModal = document.getElementById('view-data-modal');
 // Using this for inspiration: https://dev.to/wizdomtek/creating-a-dynamic-calendar-using-html-css-and-javascript-29m
 function drawCalendar() { // Function to draw the calendar month.
     calendarGrid.innerHTML = ''; // Wipe the calendar clean before drawing.
-    const year = viewingDate.getFullYear(); // Getting year from current view date.
-    const month = viewingDate.getMonth(); // Getting month from current view date.
+    const year = viewingDate.getFullYear(); // Getting the year from current view date.
+    const month = viewingDate.getMonth(); // Getting the month from current view date.
     monthLabel.textContent = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(viewingDate); // Set month-year label at top
     
 
-    const firstDayIndex = new Date(year, month, 1).getDay(); // Find first weekday of the month.
-    const totalDays = new Date(year, month + 1, 0).getDate(); // Find total days in the month.
+    const firstDayIndex = new Date(year, month, 1).getDay(); // Find the first weekday of the month.
+    const totalDays = new Date(year, month + 1, 0).getDate(); // Find the total days in the month.
     let emptySpaces = firstDayIndex === 0 ? 6 : firstDayIndex - 1; // Calculate leading empty boxes.
 
     for (let i = 0; i < emptySpaces; i++) { // Loop to create empty gaps.
-        const space = document.createElement('div'); // Create a box.
+        const space = document.createElement('div'); // Createing a box.
         space.className = 'calendar-day empty'; // Mark it as empty.
-        calendarGrid.appendChild(space); // Add to the grid.
+        calendarGrid.appendChild(space); // Adding it to the grid.
     } // End of gap loop.
 
     for (let day = 1; day <= totalDays; day++) { // Loop for every real day.
